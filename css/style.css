@@ -1,0 +1,246 @@
+/* button hover */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s;
+    z-index: 1;
+
+}
+
+
+.btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: #000000;
+    transition: width .8s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 0;
+}
+
+.btn:hover::before {
+    width: 100%;
+}
+
+.btn:hover {
+    color: white;
+}
+
+.btn span {
+    position: relative;
+    z-index: 1;
+}
+
+/* font */
+html,
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffff;
+}
+
+#spinner {
+    transition: all 2s;
+    z-index: -99999;
+}
+
+/* navbar */
+
+
+.nav-shadow {
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+    transition: box-shadow .8s ease;
+}
+
+.no-nav-shadow {
+    transition: box-shadow .8s ease;
+}
+
+.nav-item-container {
+
+    margin-top: -10;
+    background-color: white;
+}
+
+.nav-item {
+    margin-right: 20px;
+    margin-top: 5px;
+    padding-top: 20px;
+}
+
+.user-img{
+    height: 35px;
+    width: 35px;
+}
+.circle{
+    height: 40px;
+    width: 40px;
+    border: 3px solid black;
+    overflow: hidden;
+}
+
+.phone-num {
+    cursor: pointer;
+    margin-top: 0;
+    margin-left: 5px;
+    width: 200px;
+}
+
+.phone-num .col-8 {
+    padding-left: 18px;
+}
+.phone-num .svg {
+    height: 40px;
+    width: 40px;
+    margin-top: 4px;
+}
+
+
+
+/* carousal */
+@media (max-width: 576px) {
+    .custom-rounded {
+        border-radius: 0 !important;
+    }
+}
+
+
+/* ..............form 1..............  */
+
+.form1 {
+    margin-top: 100px;
+}
+
+.form2 {
+    margin-top: 200px;
+}
+
+.rounded-bordr {
+    border-radius: 35px;
+}
+
+
+.content {
+    padding-top: 15rem;
+}
+
+/* ...............vehicles section.............*/
+
+.form1 .card {
+    transition: transform 0.4s cubic-bezier(0.45, 0, 0.55, 1),
+        box-shadow 0.4s cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+
+.form1 .card:hover {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    transform: scale(1.05);
+}
+
+
+/* ...............icons................ */
+
+.three-icons {
+    margin-top: 100px;
+}
+
+
+/* .................footer................ */
+
+footer {
+    background-color: #343a40 !important;
+    /* Dark background */
+}
+
+footer a,
+footer i {
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+footer a:hover,
+footer i:hover {
+    color: #ffc107 ;
+
+}
+
+footer h5 {
+    margin-bottom: 1.5rem;
+}
+
+/* Login page */
+
+
+.login-bg {
+    height: 65vh;
+}
+
+.link{
+    margin-top: 5px !important;
+    
+    
+}
+.link {
+    text-decoration: none;
+    transition: all .5s ;
+}
+.link:hover{
+    color: blue;
+    
+}
+
+.CA-btn {
+    margin-top: 33px;
+}
+
+
+
+.padding {
+    padding-top: 10rem;
+    padding-bottom: 5rem;
+}
+
+
+.loginImg {
+    background-image: url('../images/loginBG.jpg');
+    background-size: cover;
+    background-position: center;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .loginImg {
+        background-size: contain;
+        height: auto;
+    }
+}
+
+
+.login-bg {
+    min-height: 65vh;
+    max-height: 100%;
+}
+.row.w-100.h-100 {
+    display: flex;
+    align-items: stretch; /* Ensure both columns stretch equally */
+}
+
+/* signup page */
+
+.padding2 {
+
+    padding-top: 10rem;
+    padding-bottom: 5rem;
+}
+
+
+/* profile page */
+
+.inactive {
+    color: rgb(192, 25, 25) !important;
+}
+
+.active {
+    color: black;
+}
