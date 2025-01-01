@@ -1,13 +1,6 @@
 <?php
 require_once("../database/databaseLogin.php");
 
-try {
-    $pdo = new PDO($attr, $user, $pass, $opts);
-} catch (\PDOException $e) {
-    throw new \PDOException($e->getMessage(), (int)$e->getCode());
-}
-
-
 session_start();
 
 if (isset($_SESSION["email"]) && $_SESSION["fname"]) {
@@ -19,14 +12,21 @@ if (isset($_SESSION["email"]) && $_SESSION["fname"]) {
     header("Location: ../login.php");
 }
 
-$query = "SELECT r.*, v.* FROM `rental` r JOIN `vehicle` v ON r.`Vehicle_Registration_number` = v.`Registration_number`
-WHERE r.`Customer_ID` = :cus_id";
+try {
+    $pdo = new PDO($attr, $user, $pass, $opts);
 
-$stmt = $pdo->prepare($query);
-$stmt->bindparam(":cus_id", $customer_id);
-$stmt->execute();
+    $query = "SELECT r.*, v.* FROM `rental` r JOIN `vehicle` v ON r.`Vehicle_Registration_number` = v.`Registration_number`
+    WHERE r.`Customer_ID` = :cus_id";
+    
+    $stmt = $pdo->prepare($query);
+    $stmt->bindparam(":cus_id", $customer_id);
+    $stmt->execute();
+    
+    $rental_vehicle = $stmt->fetchAll();
 
-$rental_vehicle = $stmt->fetchAll();
+} catch (\PDOException $e) {
+    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+}
 
 
 $ongoing = 0;
@@ -75,9 +75,8 @@ foreach ($rental_vehicle as $row) {
                 <a href="Bookings.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-circle-check me-2"></i>Bookings</a>
                 <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-bell me-2"></i><span class="position-relative padding-rgt">Notification <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            0
-                            <span class="visually-hidden">unread messages</span>
+                        class="fa-solid fa-bell me-2"></i><span class="position-relative padding-rgt">Notification <span id="notifications" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <?php echo $_SESSION['UnreadNotifiCount']; ?>
                         </span></span>
                     </span></a>
                 <a href="Help.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
@@ -246,6 +245,8 @@ foreach ($rental_vehicle as $row) {
         toggleButton.onclick = function() {
             el.classList.toggle("toggled");
         };
+
+        window.onload = updateNotifications(-1);
     </script>
 </body>
 

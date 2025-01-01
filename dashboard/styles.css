@@ -159,3 +159,30 @@
 .padding-rgt{
   padding-right: 20px;
 }
+
+/* Customer Notifications */
+
+.notifi {
+  background-color: #DCDCDC;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color ease-in .2s;
+}
+
+.notifi:hover {
+  background-color: #b9b6b6;
+}
+
+#notifications {
+  display: none;
+}
+
+.notifi-read{
+  background-color: #A9A9A9;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+}

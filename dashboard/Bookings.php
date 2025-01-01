@@ -60,9 +60,8 @@ $vehicle_table = $stmt->fetchAll();
                 <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold  active"><i
                         class="fa-solid fa-circle-check me-2"></i>Bookings</a>
                         <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-bell me-2"></i><span class="position-relative padding-rgt">Notification <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            0
-                            <span class="visually-hidden">unread messages</span>
+                        class="fa-solid fa-bell me-2"></i><span class="position-relative padding-rgt">Notification <span id="notifications" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <?php echo $_SESSION['UnreadNotifiCount']; ?>
                         </span></span>
                     </span></a>
                 <a href="Help.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
@@ -198,6 +197,10 @@ $vehicle_table = $stmt->fetchAll();
                 localStorage.removeItem("showToast"); 
             }
         });
+
+
+        window.onload = updateNotifications(-1);
+    
     </script>
     
 </body>

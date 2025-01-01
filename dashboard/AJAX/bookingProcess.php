@@ -1,6 +1,6 @@
 <?php
 
-require_once("../database/databaseLogin.php");
+require_once("../../database/databaseLogin.php");
 session_start();
 $customer_id = $_SESSION['customer_id'];
 

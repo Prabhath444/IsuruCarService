@@ -1,4 +1,5 @@
 <?php
+require_once("../database/databaseLogin.php");
 session_start();
 if (isset($_SESSION["email"]) && $_SESSION["fname"]) {
     $email = $_SESSION["email"];
@@ -6,6 +7,22 @@ if (isset($_SESSION["email"]) && $_SESSION["fname"]) {
     $lname = $_SESSION["lname"];
 } else {
     header("Location: ../login.php");
+}
+
+$customer_id = $_SESSION["customer_id"];
+
+try {
+    $pdo = new PDO($attr, $user, $pass, $opts);
+    $query = "SELECT n.*,v.`Make`, v.`Model`,v.`Type`,v.`image` FROM `notification` n JOIN `vehicle` v 
+ON n.`vehicle_Registration_number` = v.`Registration_number` WHERE n.`customer_ID` = :cusID;";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(':cusID', $customer_id);
+    $stmt->execute();
+
+    $notifications = $stmt->fetchAll(PDO::FETCH_OBJ);
+} catch (\PDOException $e) {
+    throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 
 
@@ -40,8 +57,11 @@ if (isset($_SESSION["email"]) && $_SESSION["fname"]) {
                         class="fa-solid fa-circle-user me-2"></i>Profile</a>
                 <a href="Bookings.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-circle-check me-2"></i>Bookings</a>
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
-                        class="fa-solid fa-bell me-2"></i>Notification</a>
+                <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fa-solid fa-bell me-2"></i><span class="position-relative padding-rgt">Notification <span id="notifications" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <?php echo $_SESSION['UnreadNotifiCount']; ?>
+                        </span></span>
+                    </span></a>
                 <a href="Help.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-circle-question me-2"></i>Help</a>
                 <form action="../logout.php" method="POST">
@@ -85,11 +105,43 @@ if (isset($_SESSION["email"]) && $_SESSION["fname"]) {
                     </ul>
                 </div>
             </nav>
+            <div class="container-fluid px-5">
 
+                <?php
+
+                foreach ($notifications as $notification) {
+
+                    $title = $notification->Title;
+                    $class = ($notification->status == 'not-read') ? "notifi" : "notifi-read";
+                    $notifi_id= $notification->ID;
+                    $vehicle = "$notification->Make $notification->Model";
+                    $vehicle_img = $notification->image;
+
+                    echo <<< _END
+                                    
+                    <div id="$notifi_id" class="container-fluid border border-1 $class border-dark" onclick="updateNotifications($notifi_id);">
+                        <h3 class="fw-bold">$title</h3>
+                        <div class="container">
+                            <div class="row">
+                            <div class="col-4 col-lg-2">
+                                <img src="../$vehicle_img" height="100px" class="rounded-3" alt="...">
+                            </div>
+                            <div class="col-8 col-lg-10 d-flex  align-items-center">
+                            <p class="">$vehicle booked. </p>
+                            </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    _END;
+                }
+                ?>
+            </div>
         </div>
 
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../JS/script.js"></script>
         <script>
             var el = document.getElementById("wrapper");
             var toggleButton = document.getElementById("menu-toggle");
@@ -97,6 +149,8 @@ if (isset($_SESSION["email"]) && $_SESSION["fname"]) {
             toggleButton.onclick = function() {
                 el.classList.toggle("toggled");
             };
+
+            window.onload = updateNotifications(-1);
         </script>
 </body>
 

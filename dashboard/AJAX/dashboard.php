@@ -3,20 +3,21 @@ require_once("../../database/databaseLogin.php");
 
 session_start();
 $customer_id = $_SESSION["customer_id"];
+
+
 try {
     $pdo = new PDO($attr, $user, $pass, $opts);
+    $query = "SELECT r.*, v.* FROM `rental` r JOIN `vehicle` v ON r.`Vehicle_Registration_number` = v.`Registration_number`
+WHERE r.`Customer_ID` = :cus_id";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->bindparam(":cus_id", $customer_id);
+    $stmt->execute();
+    $rental_vehicle = $stmt->fetchAll();
+
 } catch (\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
-
-$query = "SELECT r.*, v.* FROM `rental` r JOIN `vehicle` v ON r.`Vehicle_Registration_number` = v.`Registration_number`
-WHERE r.`Customer_ID` = :cus_id";
-
-$stmt = $pdo->prepare($query);
-$stmt->bindparam(":cus_id", $customer_id);
-$stmt->execute();
-
-$rental_vehicle = $stmt->fetchAll();
 
 $selected_status = $_POST['status'];
 
