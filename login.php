@@ -16,10 +16,6 @@ if (isset($_SESSION["fname"]) && $_SESSION["email"]) {
     header("Location: dashboard/index.php");
     exit();
 }
-
-
-
-
 ?>
 
 

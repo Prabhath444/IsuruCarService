@@ -111,7 +111,7 @@ foreach ($rental_vehicle as $row) {
                                 <i class="fas fa-user me-2"></i><?php echo $fname . " " . $lname  ?>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> <!--- updated --->
-                                <li><a class="dropdown-item text-center fw-bold" href="#">Profile</a></li>
+                                <li><a class="dropdown-item text-center fw-bold" href="profile.php">Profile</a></li>
                                 <form action="../logout.php" method="POST">
                                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                                         <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
