@@ -122,7 +122,7 @@ function changeDashboardContent(status) {
 
   var XHR = new XMLHttpRequest();
 
-  XHR.open("POST", "http://localhost/IsuruCarService/AJAX/dashboard.php", true);
+  XHR.open("POST", "http://localhost/IsuruCarService/dashboard/AJAX/dashboard.php", true);
 
   var formData = new FormData();
   formData.append("status", status);
