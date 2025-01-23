@@ -7,7 +7,6 @@ try {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 
-
 session_start();
 
 if (isset($_SESSION["email"]) && $_SESSION["password"] && $_SESSION['admin_id']) {
@@ -16,7 +15,6 @@ if (isset($_SESSION["email"]) && $_SESSION["password"] && $_SESSION['admin_id'])
 } else {
     header("Location: ../login.php");
 }
-
 $query = "SELECT r.*, v.* FROM `rental` r JOIN `vehicle` v ON r.`Vehicle_Registration_number` = v.`Registration_number`";
 
 $stmt = $pdo->prepare($query);
@@ -38,6 +36,8 @@ foreach ($rental_vehicle as $row) {
         $completed++;
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -64,11 +64,11 @@ foreach ($rental_vehicle as $row) {
                 </a>
             </div>
             <div class="list-group list-group-flush my-3">
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                 <a href="profile.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-circle-user me-2"></i>Profile</a>
-                <a href="payments.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                <a href="payments.php" class="list-group-item list-group-item-action bg-transparent second-text active"><i
                         class="fas fa-wallet me-2"></i>Payments</a>
                 <a href="Bookings.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-circle-check me-2"></i>Bookings</a>
@@ -125,7 +125,7 @@ foreach ($rental_vehicle as $row) {
                         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeDashboardContent('Ongoing')">
                             <div>
                                 <h3 class="fs-2"><?php echo $ongoing  ?></h3>
-                                <p class="fs-5 fw-bold">Ongoing</p>
+                                <p class="fs-5 fw-bold">Pending</p>
                             </div>
                             <i class="fa-solid fa-car fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                         </div>
@@ -135,7 +135,7 @@ foreach ($rental_vehicle as $row) {
                         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeDashboardContent('Completed')">
                             <div>
                                 <h3 class="fs-2"><?php echo $completed  ?></h3>
-                                <p class="fs-5 fw-bold">Completed</p>
+                                <p class="fs-5 fw-bold">Recieved</p>
                             </div>
                             <i
                                 class="fa-solid fa-car-on fs-1 primary-text border rounded-full secondary-bg p-3"></i>
@@ -146,17 +146,17 @@ foreach ($rental_vehicle as $row) {
                         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded" onclick="">
                             <div>
                                 <h3 class="fs-2">12</h3>
-                                <p class="fs-5 fw-bold">Book Now</p>
+                                <p class="fs-5 fw-bold">Expenses</p>
                             </div>
                             <i class="fas fa-taxi fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                         </div>
                     </div>
 
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded" onclick="">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded" onclick="loadContent('expenses')">
                             <div>
                                 <h3 class="fs-2">13</h3>
-                                <p class="fs-5 fw-bold">Payments</p>
+                                <p class="fs-5 fw-bold">Monthly Report</p>
                             </div>
                             <i class="fa-solid fa-coins fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                         </div>
@@ -216,6 +216,8 @@ foreach ($rental_vehicle as $row) {
                                         <td scope="col">$days Days</td>
                                         <td>$status</td>
                                         <td>RS: $amount</td>
+                                        <td>
+                                        <button class="btn btn-primary" onclick="settlePayment($no)">Settle Payment</button></td>
                                     </tr>
                                     _END;
                                 }
