@@ -15,7 +15,7 @@ if (isset($_SESSION["email"]) && $_SESSION["password"] && $_SESSION['admin_id'])
 } else {
     header("Location: ../login.php");
 }
-$query = "SELECT r.*, v.* FROM `rental` r JOIN `vehicle` v ON r.`Vehicle_Registration_number` = v.`Registration_number`";
+$query = "SELECT r.*, v.Model,v.Make,v.Rental_rate, c.Email FROM `rental` r JOIN `vehicle` v ON r.`Vehicle_Registration_number` = v.`Registration_number` JOIN `customer` c ON r.`Customer_ID` = c.`Customer_ID` ORDER BY `Time` DESC;";
 
 $stmt = $pdo->prepare($query);
 $stmt->execute();
@@ -168,12 +168,13 @@ foreach ($rental_vehicle as $row) {
                     <div class="col">
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th scope="col" width="50">#</th>
                                     <th scope="col">Vehicle</th>
-                                    <th scope="col">Duration</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Customer Email</th>
                                     <th scope="col">Amount</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody id="table">
@@ -194,6 +195,8 @@ foreach ($rental_vehicle as $row) {
                                     $rental_date = $row['Rental_date'];
                                     $return_date = $row['Return_date'];
                                     $rental_rate = $row['Rental_rate'];
+                                    $date = date('Y-m-d', strtotime($row['Time']));
+                                    $cusEmail = $row['Email'];
 
 
                                     $rentalDateTime = new DateTime($rental_date);
@@ -210,14 +213,13 @@ foreach ($rental_vehicle as $row) {
 
                                     echo <<< _END
                                 
-                                    <tr>
+                                    <tr class="text-center">
                                         <th scope="row">$no</th>
                                         <td>$vehicle_name</td>
-                                        <td scope="col">$days Days</td>
-                                        <td>$status</td>
+                                        <td scope="col">$date</td>
+                                        <td>$cusEmail</td>
                                         <td>RS: $amount</td>
-                                        <td>
-                                        <button class="btn btn-primary" onclick="settlePayment($no)">Settle Payment</button></td>
+                                        <td><button class="btn btn-primary" onclick="settlePayment($no)"><span>Settle Payment</span></button></td>
                                     </tr>
                                     _END;
                                 }
