@@ -15,6 +15,12 @@ if (isset($_SESSION["email"]) && $_SESSION["password"] && $_SESSION['admin_id'])
 } else {
     header("Location: ../login.php");
 }
+
+$query = "SELECT * FROM expenses";
+$stmt = $pdo->prepare($query);
+$stmt->execute();
+
+$expences_data = $stmt->fetchAll();
 $query = "SELECT r.*, v.Model,v.Make,v.Rental_rate, c.Email FROM `rental` r JOIN `vehicle` v ON r.`Vehicle_Registration_number` = v.`Registration_number` JOIN `customer` c ON r.`Customer_ID` = c.`Customer_ID` ORDER BY `Time` DESC;";
 
 $stmt = $pdo->prepare($query);
@@ -34,8 +40,7 @@ foreach ($rental_vehicle as $row) {
     }
     if ($status == 'Completed') {
         $completed++;
-    }
-}
+    }}
 
 
 ?>
@@ -162,18 +167,25 @@ foreach ($rental_vehicle as $row) {
                         </div>
                     </div>
                 </div>
-
                 <div class="row my-5">
-                    <h3 class="fs-4 mb-3" id="table_name">Ongoing Rentals</h3>
+                    <h3 class="fs-4 mb-3" id="table_name">Expenses</h3>
+                    <div class="col text-start">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <span>ADD NEW</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row my-5">
+
                     <div class="col">
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr class="text-center">
-                                    <th scope="col" width="50"></th>
-                                    <th scope="col">Vehicle</th>
+                                    <th scope="col" width="50">#</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Customer Email</th>
                                     <th scope="col">Amount</th>
+                                    <th scope="col">Vehicle</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -181,45 +193,22 @@ foreach ($rental_vehicle as $row) {
 
                                 <?php
 
-                                foreach ($rental_vehicle as $row) {
-                                    static $no = 0;
-                                    $no++;
-                                    $status = $row['Rental_status'];
+                                foreach ($expences_data as $row) {
 
-                                    if ($status != "Ongoing") {
-                                        continue;
-                                    }
-
-                                    $vehicle_name = $row['Make'] . " " . $row['Model'];
-                                    $total_KM = $row['Total_KM'];
-                                    $rental_date = $row['Rental_date'];
-                                    $return_date = $row['Return_date'];
-                                    $rental_rate = $row['Rental_rate'];
-                                    $date = date('Y-m-d', strtotime($row['Time']));
-                                    $cusEmail = $row['Email'];
-
-
-                                    $rentalDateTime = new DateTime($rental_date);
-                                    $returnDateTime = new DateTime($return_date);
-
-                                    $interval = $rentalDateTime->diff($returnDateTime);
-                                    $days = $interval->days;
-
-                                    if ($days * 100 - $total_KM > 0) {
-                                        $amount = $days * 100 * $rental_rate;
-                                    } else {
-                                        $amount = $total_KM * $rental_rate;
-                                    }
-
+                                    $id = $row['Expense_ID'];
+                                    $date = $row['Expense_date'];
+                                    $type = $row['Expense_type'];
+                                    $amount = $row['Expense_amount'];
+                                    $vrn = $row['vehicle_Registration_number'];
                                     echo <<< _END
                                 
                                     <tr class="text-center">
-                                        <th scope="row">$no</th>
-                                        <td>$vehicle_name</td>
-                                        <td scope="col">$date</td>
-                                        <td>$cusEmail</td>
+                                        <th scope="row"></th>
+                                        <td>$type</td>
+                                        <td >$date</td>
                                         <td>RS: $amount</td>
-                                        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" ><span>Settle Payment</span></button></td>
+                                        <td>$vrn </td>
+                                        <td><button type="button" class="btn btn-danger"><span>Delete</span></button></td>
                                     </tr>
                                     _END;
                                 }
@@ -239,55 +228,33 @@ foreach ($rental_vehicle as $row) {
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModal">Payment Details</h5>
+                    <h5 class="modal-title" id="exampleModal">Expense Details</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Customer Email</label>
-                            <input type="email" class="form-control" id="Email" >
-                            
+                            <label for="exampleInputEmail1" class="form-label">Description</label>
+                            <input type="email" class="form-control" id="Email">
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Date</label>
+                            <input type="text" class="form-control" id="text1">
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Amount</label>
+                            <input type="text" class="form-control" id="text2">
+
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Vehicle</label>
-                            <input type="text" class="form-control" id="text1" >
-                            
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Rental Date</label>
-                            <input type="text" class="form-control" id="text2" >
-                            
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Return Date</label>
-                            <input type="text" class="form-control" id="text3" >
-                            
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Maximum Milage</label>
-                            <input type="text" class="form-control" id="text4" >
-                            
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Total Milage</label>
-                            <input type="text" class="form-control" id="text5" >
-                            
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Additional Milage</label>
-                            <input type="text" class="form-control" id="text6" >
-                            
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Total Amount</label>
-                            <input type="text" class="form-control" id="text7" >
-                            
-                        </div>
+                            <input type="text" class="form-control" id="text3">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span>Close</span></button>
-                    <button type="button" class="btn btn-primary"><span>Settle Payment</span></button>
+                    <button type="button" class="btn btn-primary"><span>Add</span></button>
                 </div>
             </div>
         </div>
