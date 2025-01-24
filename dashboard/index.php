@@ -171,7 +171,7 @@ foreach ($rental_vehicle as $row) {
                     <div class="col">
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th scope="col" width="50">#</th>
                                     <th scope="col">Vehicle</th>
                                     <th scope="col">Duration</th>
@@ -189,6 +189,7 @@ foreach ($rental_vehicle as $row) {
                                     $status = $row['Rental_status'];
 
                                     if ($status != "Ongoing") {
+                                        $no--;
                                         continue;
                                     }
 
@@ -213,7 +214,7 @@ foreach ($rental_vehicle as $row) {
 
                                     echo <<< _END
                                 
-                                    <tr>
+                                    <tr class="text-center" >
                                         <th scope="row">$no</th>
                                         <td>$vehicle_name</td>
                                         <td scope="col">$days Days</td>

@@ -122,7 +122,7 @@ foreach ($rental_vehicle as $row) {
             <div class="container-fluid px-4">
                 <div class="row g-3 my-2">
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeDashboardContent('Ongoing')">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeAdminDashboardContent('Ongoing')">
                             <div>
                                 <h3 class="fs-2"><?php echo $ongoing  ?></h3>
                                 <p class="fs-5 fw-bold">Pending</p>
@@ -132,7 +132,7 @@ foreach ($rental_vehicle as $row) {
                     </div>
 
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeDashboardContent('Completed')">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeAdminDashboardContent('Completed')">
                             <div>
                                 <h3 class="fs-2"><?php echo $completed  ?></h3>
                                 <p class="fs-5 fw-bold">Recieved</p>
@@ -187,6 +187,7 @@ foreach ($rental_vehicle as $row) {
                                     $status = $row['Rental_status'];
 
                                     if ($status != "Ongoing") {
+                                        $no--;
                                         continue;
                                     }
 
@@ -197,19 +198,8 @@ foreach ($rental_vehicle as $row) {
                                     $rental_rate = $row['Rental_rate'];
                                     $date = date('Y-m-d', strtotime($row['Time']));
                                     $cusEmail = $row['Email'];
-
-
-                                    $rentalDateTime = new DateTime($rental_date);
-                                    $returnDateTime = new DateTime($return_date);
-
-                                    $interval = $rentalDateTime->diff($returnDateTime);
-                                    $days = $interval->days;
-
-                                    if ($days * 100 - $total_KM > 0) {
-                                        $amount = $days * 100 * $rental_rate;
-                                    } else {
-                                        $amount = $total_KM * $rental_rate;
-                                    }
+                                    $rentID = $row['Rental_ID'];
+                                
 
                                     echo <<< _END
                                 
@@ -218,8 +208,8 @@ foreach ($rental_vehicle as $row) {
                                         <td>$vehicle_name</td>
                                         <td scope="col">$date</td>
                                         <td>$cusEmail</td>
-                                        <td>RS: $amount</td>
-                                        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" ><span>Settle Payment</span></button></td>
+                                        <td>Pending</td>
+                                        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settlePayment" onclick="settlePayment($rentID)" ><span>Settle Payment</span></button></td>
                                     </tr>
                                     _END;
                                 }
@@ -235,7 +225,9 @@ foreach ($rental_vehicle as $row) {
     </div>
     <!-- /#page-content-wrapper -->
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+
+    <!-- Settle payment model --> 
+    <div class="modal fade" id="settlePayment" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -245,44 +237,44 @@ foreach ($rental_vehicle as $row) {
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Customer Email</label>
-                            <input type="email" class="form-control" id="Email" >
+                            <label for="Email" class="form-label">Customer Email</label>
+                            <input type="email" class="form-control" id="Email" id="Email" disabled>
                             
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Vehicle</label>
-                            <input type="text" class="form-control" id="text1" >
+                            <label for="vehicle" class="form-label">Vehicle</label>
+                            <input type="text" class="form-control" id="vehicle" id="vehicle" disabled>
                             
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Rental Date</label>
-                            <input type="text" class="form-control" id="text2" >
+                            <label for="rentdate" class="form-label">Rental Date</label>
+                            <input type="text" class="form-control" id="rentdate" name="rentdate" disabled>
                             
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Return Date</label>
-                            <input type="text" class="form-control" id="text3" >
+                            <label for="retdate" class="form-label">Return Date</label>
+                            <input type="text" class="form-control" id="retdate" name="retdate" disabled>
                             
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Maximum Milage</label>
-                            <input type="text" class="form-control" id="text4" >
+                            <label for="maxmilage" class="form-label">Maximum Milage</label>
+                            <input type="text" class="form-control" id="maxmilage" name="maxmilage" value="" disabled>
                             
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Total Milage</label>
-                            <input type="text" class="form-control" id="text5" >
+                            <label for="addmilage" class="form-label">Additional Milage</label>
+                            <input type="text" class="form-control" id="addmilage" name="addmilage" value="" >
                             
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Additional Milage</label>
-                            <input type="text" class="form-control" id="text6" >
+                            <label for="totmilage" class="form-label">Total Milage</label>
+                            <input type="text" class="form-control" id="totmilage"  name="totmilage" value="" disabled>
                             
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Total Amount</label>
-                            <input type="text" class="form-control" id="text7" >
-                            
+                            <label for="totamount" class="form-label">Total Amount (Rs.)</label>
+                            <input type="text" class="form-control" id="totamount" name="totamount" value="" disabled>
+                            <input type="text" id="rentId" name="rentId" hidden>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -292,6 +284,7 @@ foreach ($rental_vehicle as $row) {
             </div>
         </div>
     </div>
+    <!-- Settle payment model -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/script.js"></script>

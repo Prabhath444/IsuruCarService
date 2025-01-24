@@ -2,16 +2,14 @@
 require_once("../../database/databaseLogin.php");
 
 session_start();
-$customer_id = $_SESSION["customer_id"];
 
 
 try {
     $pdo = new PDO($attr, $user, $pass, $opts);
-    $query = "SELECT r.*, v.* FROM `rental` r JOIN `vehicle` v ON r.`Vehicle_Registration_number` = v.`Registration_number`
-WHERE r.`Customer_ID` = :cus_id";
+    $query = "SELECT r.*, v.Model,v.Make,v.Rental_rate, c.Email FROM `rental` r JOIN `vehicle` v ON r.`Vehicle_Registration_number` = v.`Registration_number` JOIN `customer` c ON r.`Customer_ID` = c.`Customer_ID` ORDER BY `Time` DESC;";
+
 
     $stmt = $pdo->prepare($query);
-    $stmt->bindparam(":cus_id", $customer_id);
     $stmt->execute();
     $rental_vehicle = $stmt->fetchAll();
 
@@ -37,6 +35,9 @@ foreach ($rental_vehicle as $row) {
     $rental_date = $row['Rental_date'];
     $return_date = $row['Return_date'];
     $rental_rate = $row['Rental_rate'];
+    $date = date('Y-m-d', strtotime($row['Time']));
+    $cusEmail = $row['Email'];
+    $rentID = $row['Rental_ID'];
 
 
     $rentalDateTime = new DateTime($rental_date);
@@ -51,14 +52,26 @@ foreach ($rental_vehicle as $row) {
         $amount = $total_KM * $rental_rate;
     }
 
+    if($status == "Ongoing"){
+        $settlePaymentButton = <<< _END
+        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settlePayment" onclick="settlePayment($rentID)" ><span>Settle Payment</span></button></td>
+        _END;
+        $amount = "Pending";
+
+    }else{
+        $settlePaymentButton = "";
+    }
+    
+
     echo <<< _END
     
         <tr class="text-center">
             <th scope="row">$no</th>
             <td>$vehicle_name</td>
-            <td scope="col">$days Days</td>
-            <td>$status</td>
-            <td>RS: $amount</td>
+            <td scope="col">$date</td>
+            <td>$cusEmail</td>
+            <td>$amount</td>
+            $settlePaymentButton
         </tr>
         _END;
 }

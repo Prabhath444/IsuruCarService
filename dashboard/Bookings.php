@@ -130,7 +130,7 @@ $vehicle_table = $stmt->fetchAll();
                                         <div class="card-body d-flex flex-column">
                                             <h5 class="card-title text-center">$vehicle_name</h5>
                                             <br><br>
-                                            <button onclick="addRegistrationNumber('$vehicle_reg_number')" type="button" class="btn btn-warning col-12 mt-auto" data-bs-toggle="modal" data-bs-target="#staticBackdrop" ><span><span>Book Now</span></span></button>
+                                            <button onclick="addRegistrationNumber('$vehicle_reg_number')" type="button" class="btn btn-warning col-12 mt-auto" data-bs-toggle="modal" data-bs-target="#staticBackdrop" ><span><span>Select</span></span></button>
                                         </div>
                                     </div>
                                 _END;

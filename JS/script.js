@@ -116,13 +116,33 @@ function goToLogin() {
 
 }
 
-// ..................dashboard
+// ..................customer dashboard
 
 function changeDashboardContent(status) {
 
   var XHR = new XMLHttpRequest();
 
   XHR.open("POST", "http://localhost/IsuruCarService/dashboard/AJAX/dashboard.php", true);
+
+  var formData = new FormData();
+  formData.append("status", status);
+
+  XHR.send(formData);
+  XHR.onreadystatechange = function () {
+
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("table").innerHTML = this.responseText;
+    }
+  };
+}
+
+// ..................admin dashboard
+
+function changeAdminDashboardContent(status) {
+
+  var XHR = new XMLHttpRequest();
+
+  XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/dashboard.php", true);
 
   var formData = new FormData();
   formData.append("status", status);
@@ -331,4 +351,65 @@ function updateNotifications(id) {
 
 }
 
+// ............................Settle payment
+function settlePayment(id) {
+
+  var XHR = new XMLHttpRequest();
+  XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/settlePayments.php", true);
+
+  var formData = new FormData();
+  formData.append("rentID", id);
+  XHR.send(formData);
+
+
+  XHR.onreadystatechange = function () {
+
+    if (this.readyState == 4 && this.status == 200) {
+
+      try {
+
+        var response = JSON.parse(XHR.responseText);
+
+        if (response.error) {
+          console.log(response.error);
+        } else {
+
+          document.getElementById('Email').value = response.Email;
+          document.getElementById('vehicle').value = response.Make + " " + response.Model;
+          document.getElementById('rentdate').value = response.Rental_date;
+          document.getElementById('retdate').value = response.Return_date;
+          document.getElementById('maxmilage').value = response.Total_KM;
+          document.getElementById('rentId').value = response.Rental_ID;
+
+
+          const addmilageInput = document.getElementById("addmilage");
+          const totalKM = document.getElementById("totmilage");
+          const totalAmount = document.getElementById("totamount");
+
+          // Add an event listener to the input field
+          addmilageInput.addEventListener("input", () => {
+            const inputValue = addmilageInput.value;
+
+            if (!isNaN(inputValue) && inputValue !== "") {
+              const totKM = (parseFloat(response.Total_KM) + parseFloat(inputValue, 10));
+              const totAmount = totKM * parseFloat(response.Rental_rate);
+
+              totalKM.value = totKM;
+              totalAmount.value = totAmount;
+            } else {
+              totalAmount.value = 0;
+            }
+          });
+        }
+
+      } catch (e) {
+        console.error("Error parsing JSON response:", e);
+        alert("An unexpected error occurred. Please try again.");
+      }
+
+
+    }
+  };
+
+}
 
