@@ -37,6 +37,17 @@ foreach ($rental_vehicle as $row) {
     }
 }
 
+$query2 = "SELECT * FROM expenses ORDER BY `Expense_date` DESC;";
+$stmt2 = $pdo->prepare($query2);
+$stmt2->execute();
+
+$expences_data = $stmt2->fetchAll();
+
+$expensesCount = 0;
+foreach ($expences_data as $row) {
+    $expensesCount++;
+}
+
 
 ?>
 
@@ -64,18 +75,14 @@ foreach ($rental_vehicle as $row) {
                 </a>
             </div>
             <div class="list-group list-group-flush my-3">
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                <a href="index.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
-                <a href="profile.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-circle-user me-2"></i>Profile</a>
-                <a href="payments.php" class="list-group-item list-group-item-action bg-transparent second-text active"><i
-                        class="fas fa-wallet me-2"></i>Payments</a>
-                <a href="Bookings.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-circle-check me-2"></i>Bookings</a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                        class="fas fa-solid fa-wallet me-2"></i>Payments</a>
+                <a href="expenses.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fa-solid fa-circle-check me-2"></i>Expenses</a>
                 <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-bell me-2"></i>Notification</a>
-                <a href="Help.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-circle-question me-2"></i>Help</a>
                 <form action="../logout.php" method="POST">
                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -143,9 +150,9 @@ foreach ($rental_vehicle as $row) {
                     </div>
 
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded" onclick="">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="window.location.href = 'expenses.php'">
                             <div>
-                                <h3 class="fs-2">12</h3>
+                                <h3 class="fs-2"><?php echo $expensesCount ?></h3>
                                 <p class="fs-5 fw-bold">Expenses</p>
                             </div>
                             <i class="fas fa-taxi fs-1 primary-text border rounded-full secondary-bg p-3"></i>

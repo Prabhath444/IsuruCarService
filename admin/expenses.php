@@ -16,31 +16,16 @@ if (isset($_SESSION["email"]) && $_SESSION["password"] && $_SESSION['admin_id'])
     header("Location: ../login.php");
 }
 
-$query = "SELECT * FROM expenses";
+$query = "SELECT * FROM expenses ORDER BY `Expense_date` DESC;";
 $stmt = $pdo->prepare($query);
 $stmt->execute();
 
 $expences_data = $stmt->fetchAll();
-$query = "SELECT r.*, v.Model,v.Make,v.Rental_rate, c.Email FROM `rental` r JOIN `vehicle` v ON r.`Vehicle_Registration_number` = v.`Registration_number` JOIN `customer` c ON r.`Customer_ID` = c.`Customer_ID` ORDER BY `Time` DESC;";
 
-$stmt = $pdo->prepare($query);
-$stmt->execute();
-
-$rental_vehicle = $stmt->fetchAll();
-
-
-$ongoing = 0;
-$completed = 0;
-foreach ($rental_vehicle as $row) {
-
-    $status = $row['Rental_status'];
-
-    if ($status == 'Ongoing') {
-        $ongoing++;
-    }
-    if ($status == 'Completed') {
-        $completed++;
-    }}
+$expensesCount = 0;
+foreach ($expences_data as $row) {
+    $expensesCount++;
+}
 
 
 ?>
@@ -69,18 +54,14 @@ foreach ($rental_vehicle as $row) {
                 </a>
             </div>
             <div class="list-group list-group-flush my-3">
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                <a href="index.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
-                <a href="profile.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-circle-user me-2"></i>Profile</a>
-                <a href="payments.php" class="list-group-item list-group-item-action bg-transparent second-text active"><i
-                        class="fas fa-wallet me-2"></i>Payments</a>
-                <a href="Bookings.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-circle-check me-2"></i>Bookings</a>
+                <a href="payments.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-solid fa-wallet me-2"></i>Payments</a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
+                        class="fas fa-solid fa-circle-check me-2"></i>Expenses</a>
                 <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-bell me-2"></i>Notification</a>
-                <a href="Help.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-circle-question me-2"></i>Help</a>
                 <form action="../logout.php" method="POST">
                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -126,7 +107,7 @@ foreach ($rental_vehicle as $row) {
 
             <div class="container-fluid px-4">
                 <div class="row g-3 my-2">
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeDashboardContent('Ongoing')">
                             <div>
                                 <h3 class="fs-2"><?php echo $ongoing  ?></h3>
@@ -143,14 +124,14 @@ foreach ($rental_vehicle as $row) {
                                 <p class="fs-5 fw-bold">Recieved</p>
                             </div>
                             <i
-                                class="fa-solid fa-car-on fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+                                class="fa-solid fa-car-on fs-1 primary-text border rounded-full secondary-bg p-3 status"></i>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded" onclick="">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="window.location.href = '#'">
                             <div>
-                                <h3 class="fs-2">12</h3>
+                                <h3 class="fs-2"><?php echo $expensesCount  ?></h3>
                                 <p class="fs-5 fw-bold">Expenses</p>
                             </div>
                             <i class="fas fa-taxi fs-1 primary-text border rounded-full secondary-bg p-3"></i>
@@ -181,11 +162,10 @@ foreach ($rental_vehicle as $row) {
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr class="text-center">
-                                    <th scope="col" width="50">#</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Vehicle</th>
+                                    <th scope="col">Amount (Rs.)</th>
+                                    <th scope="col">Vehicle Reg.No</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -198,15 +178,14 @@ foreach ($rental_vehicle as $row) {
                                     $id = $row['Expense_ID'];
                                     $date = $row['Expense_date'];
                                     $type = $row['Expense_type'];
-                                    $amount = $row['Expense_amount'];
+                                    $amount = round($row['Expense_amount'], 2);
                                     $vrn = $row['vehicle_Registration_number'];
                                     echo <<< _END
                                 
                                     <tr class="text-center">
-                                        <th scope="row"></th>
                                         <td>$type</td>
                                         <td >$date</td>
-                                        <td>RS: $amount</td>
+                                        <td>$amount</td>
                                         <td>$vrn </td>
                                         <td><button type="button" class="btn btn-danger"><span>Delete</span></button></td>
                                     </tr>
@@ -232,44 +211,46 @@ foreach ($rental_vehicle as $row) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="expensesForm">
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Description</label>
-                            <input type="email" class="form-control" id="Email">
+                            <label for="Description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="Description" name="Description" required>
 
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Date</label>
-                            <input type="text" class="form-control" id="text1">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
 
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Amount</label>
-                            <input type="text" class="form-control" id="text2">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="text" class="form-control" id="amount" name="amount" required>
 
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Vehicle</label>
-                            <input type="text" class="form-control" id="text3">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span>Close</span></button>
-                    <button type="button" class="btn btn-primary"><span>Add</span></button>
+                            <label for="Vehicle" class="form-label">Vehicle Registration Number</label>
+                            <input type="text" class="form-control" id="Vehicle" name="vehicleReg" required>
+                        </div>
+                        <div class="modal-footer">
+                            <p id="errormsg" style="display: none;" class="text-danger text-start" ></p>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span>Close</span></button>
+                            <button type="submit" class="btn btn-primary" onclick="addExpenses()"><span>Add</span></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../JS/script.js"></script>
-    <script>
-        var el = document.getElementById("wrapper");
-        var toggleButton = document.getElementById("menu-toggle");
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../JS/script.js"></script>
+        <script>
+            var el = document.getElementById("wrapper");
+            var toggleButton = document.getElementById("menu-toggle");
 
-        toggleButton.onclick = function() {
-            el.classList.toggle("toggled");
-        };
-    </script>
+            toggleButton.onclick = function() {
+                el.classList.toggle("toggled");
+            };
+        </script>
 </body>
 
 </html>

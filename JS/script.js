@@ -451,5 +451,70 @@ function lReload() {
 }
 
 
+function addExpenses() {
+
+  const description = document.getElementById("Description").value.trim();
+  const date = document.getElementById("date").value.trim();
+  const amount = document.getElementById("amount").value.trim();
+  const vehicle = document.getElementById("Vehicle").value.trim();
+
+  const errorMsgElement = document.getElementById("errormsg");
+
+  let isValid = true;
+  let errorMessage = "";
+
+
+  if (vehicle === "") {
+    isValid = false;
+    errorMessage = "Vehicle Registration Number is required.";
+  }
+
+  const amountRegex = /^[1-9]\d*(\.\d{1,2})?$/; // Positive number with up to two decimal places
+  if (!amountRegex.test(amount)) {
+    isValid = false;
+    errorMessage = "Amount must be a valid positive number.";
+  }
+
+
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!dateRegex.test(date)) {
+    isValid = false;
+    errorMessage = "Date is required";
+  }
+
+  if (description === "") {
+    isValid = false;
+    errorMessage = "Description is required.";
+  }
+
+
+
+  if (!isValid) {
+    errorMsgElement.innerHTML = errorMessage;
+    errorMsgElement.style.display = "block";
+    return;
+  }
+
+  var XHR = new XMLHttpRequest();
+  XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/expenses.php", true);
+
+  var formData = new FormData(document.getElementById("expensesForm"));
+  XHR.send(formData);
+
+  XHR.onload = function () {
+    if (XHR.status === 200) {
+
+        window.location.reload();
+      
+    } else {
+      alert("Error: Could not add expenses.");
+    }
+  };
+
+  XHR.onerror = function () {
+    alert("Network error occurred.");
+  };
+}
+
 
 
