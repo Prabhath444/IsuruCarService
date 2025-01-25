@@ -387,15 +387,22 @@ function settlePayment(id) {
           const totalAmount = document.getElementById("totamount");
 
           // Add an event listener to the input field
-          addmilageInput.addEventListener("input", () => {
-            const inputValue = addmilageInput.value;
+          totalKM.addEventListener("input", () => {
+            const inputValue = totalKM.value;
 
             if (!isNaN(inputValue) && inputValue !== "") {
-              const totKM = (parseFloat(response.Total_KM) + parseFloat(inputValue, 10));
-              const totAmount = totKM * parseFloat(response.Rental_rate);
+              const addmilage = parseFloat(inputValue) - parseFloat(response.Total_KM);
+              const totAmount = parseFloat(inputValue) * parseFloat(response.Rental_rate);
 
-              totalKM.value = totKM;
-              totalAmount.value = totAmount;
+              if (addmilage > 0) {
+                addmilageInput.value = addmilage;
+                totalAmount.value = totAmount;
+              } else {
+                addmilageInput.value = 0;
+                totalAmount.value = parseFloat(response.Total_KM) * parseFloat(response.Rental_rate);
+              }
+
+
             } else {
               totalAmount.value = 0;
             }
@@ -412,4 +419,37 @@ function settlePayment(id) {
   };
 
 }
+
+// .....................settle payment form submit process
+
+function submitSettlePaymentForm() {
+  var XHR = new XMLHttpRequest();
+
+  XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/settlePaymentProcess.php", true);
+
+  var formData = new FormData(document.getElementById("settlepaymentform"));
+
+  XHR.send(formData);
+
+  XHR.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      try {
+
+        window.location.reload();
+
+      } catch (error) {
+        console.error("Error parsing server response:", error);
+        alert("Unexpected server response.");
+      }
+    }
+  };
+
+}
+
+function lReload() {
+  location.reload();
+}
+
+
+
 

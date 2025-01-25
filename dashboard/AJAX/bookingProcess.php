@@ -14,17 +14,28 @@ $rental_date = $_POST['rentaldate'];
 $return_date = $_POST['returndate'];
 $vehicle_reg_number = $_POST['rnumber'];
 
+
+$rentalDateTime = new DateTime($rental_date);
+$returnDateTime = new DateTime($return_date);
+
+$interval = $rentalDateTime->diff($returnDateTime);
+$days = $interval->days;
+
+$total_KM = $days*100;
+
+
 try {
 
     //inserting the rental information
-    $query = "INSERT INTO `rental`(`Rental_date`,`Return_date`,`Customer_ID`,`vehicle_registration_number`,`Rental_status`) 
-    VALUES(:rentaldate,:returndate,:cusID,:vregnumber,'Ongoing');";
+    $query = "INSERT INTO `rental`(`Rental_date`,`Return_date`,`Customer_ID`,`vehicle_registration_number`,`Rental_status`,`Total_KM`) 
+    VALUES(:rentaldate,:returndate,:cusID,:vregnumber,'Ongoing',:totKM);";
     $stmt = $pdo->prepare($query);
 
     $stmt->bindParam(':cusID', $customer_id);
     $stmt->bindParam(':rentaldate', $rental_date);
     $stmt->bindParam(':returndate', $return_date);
     $stmt->bindParam(':vregnumber', $vehicle_reg_number);
+    $stmt->bindParam(':totKM', $total_KM);
 
     $stmt->execute();
 

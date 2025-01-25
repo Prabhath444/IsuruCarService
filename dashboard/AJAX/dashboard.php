@@ -14,7 +14,6 @@ WHERE r.`Customer_ID` = :cus_id";
     $stmt->bindparam(":cus_id", $customer_id);
     $stmt->execute();
     $rental_vehicle = $stmt->fetchAll();
-
 } catch (\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
@@ -45,12 +44,13 @@ foreach ($rental_vehicle as $row) {
     $interval = $rentalDateTime->diff($returnDateTime);
     $days = $interval->days;
 
-    if ($days * 100 - $total_KM > 0) {
-        $amount = $days * 100 * $rental_rate;
-    } else {
-        $amount = $total_KM * $rental_rate;
-    }
+    if ($status == 'Completed') {
 
+        $amount =  $row['Amount'];
+        $amountlimited = number_format($amount, 2);
+    } else {
+        $amountlimited =  'Pending';
+    }
     echo <<< _END
     
         <tr class="text-center">
@@ -58,7 +58,7 @@ foreach ($rental_vehicle as $row) {
             <td>$vehicle_name</td>
             <td scope="col">$days Days</td>
             <td>$status</td>
-            <td>RS: $amount</td>
+            <td>$amountlimited</td>
         </tr>
         _END;
 }

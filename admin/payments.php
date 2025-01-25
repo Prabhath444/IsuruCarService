@@ -199,7 +199,7 @@ foreach ($rental_vehicle as $row) {
                                     $date = date('Y-m-d', strtotime($row['Time']));
                                     $cusEmail = $row['Email'];
                                     $rentID = $row['Rental_ID'];
-                                
+
 
                                     echo <<< _END
                                 
@@ -226,76 +226,100 @@ foreach ($rental_vehicle as $row) {
     <!-- /#page-content-wrapper -->
     </div>
 
-    <!-- Settle payment model --> 
+    <!-- Settle payment model -->
     <div class="modal fade" id="settlePayment" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModal">Payment Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="lReload()"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="settlepaymentform">
                         <div class="mb-3">
                             <label for="Email" class="form-label">Customer Email</label>
-                            <input type="email" class="form-control" id="Email" id="Email" disabled>
-                            
+                            <input type="email" class="form-control" id="Email" name="Email" readonly>
+
                         </div>
                         <div class="mb-3">
                             <label for="vehicle" class="form-label">Vehicle</label>
-                            <input type="text" class="form-control" id="vehicle" id="vehicle" disabled>
-                            
+                            <input type="text" class="form-control" id="vehicle" name="vehicle" readonly>
+
                         </div>
                         <div class="mb-3">
                             <label for="rentdate" class="form-label">Rental Date</label>
-                            <input type="text" class="form-control" id="rentdate" name="rentdate" disabled>
-                            
+                            <input type="text" class="form-control" id="rentdate" name="rentdate" readonly>
+
                         </div>
                         <div class="mb-3">
                             <label for="retdate" class="form-label">Return Date</label>
-                            <input type="text" class="form-control" id="retdate" name="retdate" disabled>
-                            
+                            <input type="text" class="form-control" id="retdate" name="retdate" readonly>
+
                         </div>
                         <div class="mb-3">
                             <label for="maxmilage" class="form-label">Maximum Milage</label>
-                            <input type="text" class="form-control" id="maxmilage" name="maxmilage" value="" disabled>
-                            
+                            <input type="text" class="form-control" id="maxmilage" name="maxmilage" value="" readonly>
+
                         </div>
                         <div class="mb-3">
                             <label for="addmilage" class="form-label">Additional Milage</label>
-                            <input type="text" class="form-control" id="addmilage" name="addmilage" value="" >
-                            
+                            <input type="text" class="form-control" id="addmilage" name="addmilage" value="" readonly>
+
                         </div>
                         <div class="mb-3">
                             <label for="totmilage" class="form-label">Total Milage</label>
-                            <input type="text" class="form-control" id="totmilage"  name="totmilage" value="" disabled>
-                            
+                            <input type="text" class="form-control" id="totmilage" name="totmilage" value="">
+
                         </div>
                         <div class="mb-3">
                             <label for="totamount" class="form-label">Total Amount (Rs.)</label>
-                            <input type="text" class="form-control" id="totamount" name="totamount" value="" disabled>
+                            <input type="text" class="form-control" id="totamount" name="totamount" value="" readonly>
                             <input type="text" id="rentId" name="rentId" hidden>
                         </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span>Close</span></button>
-                    <button type="button" class="btn btn-primary"><span>Settle Payment</span></button>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="lReload()"><span>Close</span></button>
+                            <button type="submit" class="btn btn-primary" onclick="submitSettlePaymentForm()"><span>Settle Payment</span></button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Settle payment model -->
+        <!-- Settle payment model -->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../JS/script.js"></script>
-    <script>
-        var el = document.getElementById("wrapper");
-        var toggleButton = document.getElementById("menu-toggle");
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        Updated successfully!
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
 
-        toggleButton.onclick = function() {
-            el.classList.toggle("toggled");
-        };
-    </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../JS/script.js"></script>
+        <script>
+            var el = document.getElementById("wrapper");
+            var toggleButton = document.getElementById("menu-toggle");
+
+            toggleButton.onclick = function() {
+                el.classList.toggle("toggled");
+            };
+
+
+            document.addEventListener("DOMContentLoaded", function() {
+                var toastElement = document.getElementById('successToast');
+                var toast = new bootstrap.Toast(toastElement);
+
+                if (localStorage.getItem("showToast") === "true") {
+                    toast.show();
+                    localStorage.removeItem("showToast");
+                }
+            });
+        </script>
 </body>
 
 </html>

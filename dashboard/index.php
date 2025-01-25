@@ -219,7 +219,7 @@ foreach ($rental_vehicle as $row) {
                                         <td>$vehicle_name</td>
                                         <td scope="col">$days Days</td>
                                         <td>$status</td>
-                                        <td>RS: $amount</td>
+                                        <td>Pending</td>
                                     </tr>
                                     _END;
                                 }
