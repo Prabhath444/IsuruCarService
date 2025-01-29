@@ -81,8 +81,8 @@ foreach ($expences_data as $row) {
                         class="fas fa-solid fa-wallet me-2"></i>Payments</a>
                 <a href="expenses.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-circle-check me-2"></i>Expenses</a>
-                <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-bell me-2"></i>Notification</a>
+                <a href="vehiclemanagement.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fa-solid fa-bell me-2"></i>Vehicle Management</a>
                 <form action="../logout.php" method="POST">
                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -129,7 +129,7 @@ foreach ($expences_data as $row) {
             <div class="container-fluid px-4">
                 <div class="row g-3 my-2">
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeAdminDashboardContent('Ongoing')">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeAdminPaymentsContent('Ongoing')">
                             <div>
                                 <h3 class="fs-2"><?php echo $ongoing  ?></h3>
                                 <p class="fs-5 fw-bold">Pending</p>
@@ -139,7 +139,7 @@ foreach ($expences_data as $row) {
                     </div>
 
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeAdminDashboardContent('Completed')">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeAdminPaymentsContent('Completed')">
                             <div>
                                 <h3 class="fs-2"><?php echo $completed  ?></h3>
                                 <p class="fs-5 fw-bold">Recieved</p>
@@ -211,7 +211,7 @@ foreach ($expences_data as $row) {
                                     echo <<< _END
                                 
                                     <tr class="text-center">
-                                        <th scope="row">$no</th>
+                                        <td scope="row">$no</td>
                                         <td>$vehicle_name</td>
                                         <td scope="col">$date</td>
                                         <td>$cusEmail</td>

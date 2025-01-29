@@ -33,10 +33,11 @@ foreach ($rental_vehicle as $row) {
 
     if ($status == 'Ongoing') {
         $ongoing++;
-    }
-    if ($status == 'Completed') {
+        //$ongoing--;
+    }else{
         $completed++;
     }
+    
 }
 ?>
 
@@ -70,8 +71,8 @@ foreach ($rental_vehicle as $row) {
                         class="fas fa-solid fa-wallet me-2"></i>Payments</a>
                 <a href="expenses.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-circle-check me-2"></i>Expenses</a>
-                <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-bell me-2"></i>Notification</a>
+                <a href="vehiclemanagement.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fa-solid fa-bell me-2"></i>Vehicle Management</a>
                 <form action="../logout.php" method="POST">
                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -118,7 +119,7 @@ foreach ($rental_vehicle as $row) {
             <div class="container-fluid px-4">
                 <div class="row g-3 my-2">
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeDashboardContent('Ongoing')">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeAdminDashboardContent('Ongoing')">
                             <div>
                                 <h3 class="fs-2"><?php echo $ongoing  ?></h3>
                                 <p class="fs-5 fw-bold">Ongoing</p>
@@ -128,7 +129,7 @@ foreach ($rental_vehicle as $row) {
                     </div>
 
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeDashboardContent('Completed')">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeAdminDashboardContent('Completed')">
                             <div>
                                 <h3 class="fs-2"><?php echo $completed  ?></h3>
                                 <p class="fs-5 fw-bold">Completed</p>
@@ -163,9 +164,9 @@ foreach ($rental_vehicle as $row) {
                     <h3 class="fs-4 mb-3" id="table_name">Ongoing Rentals</h3>
                     <div class="col">
                         <table class="table bg-white rounded shadow-sm  table-hover">
-                            <thead>
+                            <thead class="text-center" >
                                 <tr>
-                                    <th scope="col" width="50">#</th>
+                                    <th scope="col" width="50"></th>
                                     <th scope="col">Vehicle</th>
                                     <th scope="col">Duration</th>
                                     <th scope="col">Status</th>
@@ -178,11 +179,14 @@ foreach ($rental_vehicle as $row) {
 
                                 foreach ($rental_vehicle as $row) {
                                     static $no = 0;
-                                    $no++;
+                                    
                                     $status = $row['Rental_status'];
 
                                     if ($status != "Ongoing") {
                                         continue;
+
+                                    }else{
+                                        $no++;
                                     }
 
                                     $vehicle_name = $row['Make'] . " " . $row['Model'];
@@ -206,7 +210,7 @@ foreach ($rental_vehicle as $row) {
 
                                     echo <<< _END
                                 
-                                    <tr>
+                                    <tr class="text-center" >
                                         <th scope="row">$no</th>
                                         <td>$vehicle_name</td>
                                         <td scope="col">$days Days</td>

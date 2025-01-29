@@ -155,6 +155,25 @@ function changeAdminDashboardContent(status) {
     }
   };
 }
+// ..................admin payments
+
+function changeAdminPaymentsContent(status) {
+
+  var XHR = new XMLHttpRequest();
+
+  XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/payments.php", true);
+
+  var formData = new FormData();
+  formData.append("status", status);
+
+  XHR.send(formData);
+  XHR.onreadystatechange = function () {
+
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("table").innerHTML = this.responseText;
+    }
+  };
+}
 
 // ............................profile
 
@@ -435,6 +454,7 @@ function submitSettlePaymentForm() {
     if (this.readyState == 4 && this.status == 200) {
       try {
 
+        localStorage.setItem("showToast", "true");
         window.location.reload();
 
       } catch (error) {
@@ -450,7 +470,7 @@ function lReload() {
   location.reload();
 }
 
-
+//.............................addExpenses
 function addExpenses() {
 
   const description = document.getElementById("Description").value.trim();
@@ -469,7 +489,7 @@ function addExpenses() {
     errorMessage = "Vehicle Registration Number is required.";
   }
 
-  const amountRegex = /^[1-9]\d*(\.\d{1,2})?$/; // Positive number with up to two decimal places
+  const amountRegex = /^[1-9]\d*(\.\d{1,2})?$/;
   if (!amountRegex.test(amount)) {
     isValid = false;
     errorMessage = "Amount must be a valid positive number.";
@@ -498,14 +518,22 @@ function addExpenses() {
   var XHR = new XMLHttpRequest();
   XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/expenses.php", true);
 
-  var formData = new FormData(document.getElementById("expensesForm"));
+  var formData = new FormData();
+  formData.append("Description", description);
+  formData.append("date", date);
+  formData.append("amount", amount);
+  formData.append("vehicleReg", vehicle);
   XHR.send(formData);
 
   XHR.onload = function () {
     if (XHR.status === 200) {
 
-        window.location.reload();
-      
+      //alert(this.responseText);
+      localStorage.setItem("showToast", "true");
+
+      window.location.reload();
+
+
     } else {
       alert("Error: Could not add expenses.");
     }
@@ -513,6 +541,118 @@ function addExpenses() {
 
   XHR.onerror = function () {
     alert("Network error occurred.");
+  };
+}
+
+
+//....................Delete Expenses
+function deleteExpense(id) {
+
+  var XHR = new XMLHttpRequest();
+  XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/deleteExpense.php", true);
+
+  var formData = new FormData();
+  formData.append("ID", id);
+  XHR.send(formData);
+
+  XHR.onload = function () {
+    if (XHR.status === 200) {
+
+      //alert(this.responseText);
+      localStorage.setItem("showToast", "true");
+
+      window.location.reload();
+
+
+    } else {
+      alert("Error: Could not add expenses.");
+    }
+  };
+
+  XHR.onerror = function () {
+    alert("Network error occurred.");
+  };
+}
+
+
+
+//................................Add a vehicle
+
+function addVehicle(event) {
+
+  event.preventDefault();
+
+  var vmodel = document.getElementById("vemodel").value;
+  var vmake = document.getElementById("vemake").value;
+  var rnumber = document.getElementById("renumber").value;
+  var rrate = document.getElementById("rerate").value;
+  var type = document.getElementById("vtype").value;
+  var year = document.getElementById("vyear").value;
+  var description = document.getElementById("vdescription").value;
+  var img = document.getElementById("vimg").files[0];
+
+  const decimalRegex = /^\d+(\.\d{1,4})?$/; // Matches up to 4 decimal places
+  const yearRegex = /^(19|20)\d{2}$/; // Matches a year between 1900 and 2099
+
+  var errmsg
+  if (!vmodel) {
+    alert("Vehicle Model is required.");
+    return;
+  }
+  if (!vmake) {
+    alert("Vehicle Make is required.");
+    return;
+  }
+  if (!rnumber) {
+    alert("Registration Number is required.");
+    return;
+  }
+  if (!rrate || !decimalRegex.test(rrate)) {
+    alert("Rental Rate must be a decimal number with up to 4 decimal points.");
+    return;
+  }
+  if (!type) {
+    alert("Vehicle Type is required.");
+    return;
+  }
+  if (!year || !yearRegex.test(year)) {
+    alert("Year must be a valid year (e.g., 2023).");
+    return;
+  }
+  if (!description) {
+    alert("Description is required.");
+    return;
+  }
+  if (!img) {
+    alert("An image is required.");
+    return;
+  }
+
+
+  var XHR = new XMLHttpRequest();
+  XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/addvehicle.php", true);
+  var formData = new FormData();
+
+  formData.append("vmodel", vmodel);
+  formData.append("vmake", vmake);
+  formData.append("rnumber", rnumber);
+  formData.append("rrate", rrate);
+  formData.append("type", type);
+  formData.append("year", year);
+  formData.append("description", description);
+  formData.append("img", img);
+
+
+  XHR.send(formData);
+
+  XHR.onreadystatechange = function () {
+
+    if (this.readyState == 4 && this.status == 200) {
+
+      localStorage.setItem("showToast", "true");
+
+      window.location.reload();
+    }
   };
 }
 

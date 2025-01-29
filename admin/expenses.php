@@ -60,8 +60,8 @@ foreach ($expences_data as $row) {
                         class="fas fa-solid fa-wallet me-2"></i>Payments</a>
                 <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
                         class="fas fa-solid fa-circle-check me-2"></i>Expenses</a>
-                <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-bell me-2"></i>Notification</a>
+                <a href="vehiclemanagement.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fa-solid fa-bell me-2"></i>Vehicle Management</a>
                 <form action="../logout.php" method="POST">
                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -187,13 +187,13 @@ foreach ($expences_data as $row) {
                                         <td >$date</td>
                                         <td>$amount</td>
                                         <td>$vrn </td>
-                                        <td><button type="button" class="btn btn-danger"><span>Delete</span></button></td>
+                                        <td><button type="button" class="btn btn-danger" onclick="deleteExpense($id)"><span>Delete</span></button></td>
                                     </tr>
                                     _END;
                                 }
 
                                 ?>
-                            </tbody>
+                            </tbody >
                         </table>
                     </div>
                 </div>
@@ -232,17 +232,30 @@ foreach ($expences_data as $row) {
                             <input type="text" class="form-control" id="Vehicle" name="vehicleReg" required>
                         </div>
                         <div class="modal-footer">
-                            <p id="errormsg" style="display: none;" class="text-danger text-start" ></p>
+                            <p id="errormsg" style="display: none;" class="text-danger text-start"></p>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span>Close</span></button>
-                            <button type="submit" class="btn btn-primary" onclick="addExpenses()"><span>Add</span></button>
+                            <button class="btn btn-primary" onclick="addExpenses()"><span>Add</span></button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        New Expense Added!
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../JS/script.js"></script>
+        
         <script>
             var el = document.getElementById("wrapper");
             var toggleButton = document.getElementById("menu-toggle");
@@ -250,6 +263,16 @@ foreach ($expences_data as $row) {
             toggleButton.onclick = function() {
                 el.classList.toggle("toggled");
             };
+
+            document.addEventListener("DOMContentLoaded", function() {
+                var toastElement = document.getElementById('successToast');
+                var toast = new bootstrap.Toast(toastElement);
+
+                if (localStorage.getItem("showToast") === "true") {
+                    toast.show();
+                    localStorage.removeItem("showToast");
+                }
+            });
         </script>
 </body>
 

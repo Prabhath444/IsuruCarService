@@ -49,18 +49,14 @@ $vehicle_table = $stmt->fetchAll();
                 </a>
             </div>
             <div class="list-group list-group-flush my-3">
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                <a href="index.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
-                <a href="profile.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-circle-user me-2"></i>Profile</a>
                 <a href="payments.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-wallet me-2"></i>Payments</a>
-                <a href="Bookings.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-circle-check me-2"></i>Bookings</a>
-                <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-bell me-2"></i>Notification</a>
-                <a href="Help.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-circle-question me-2"></i>Help</a>
+                <a href="expenses.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fa-solid fa-circle-user me-2"></i>Expenses</a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
+                        class="fa-solid fa-bell me-2"></i>Vehicle Management</a>
                 <form action="../logout.php" method="POST">
                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -135,7 +131,6 @@ $vehicle_table = $stmt->fetchAll();
                                             <button  type="button" class="btn btn-warning col-12 mt-auto" data-bs-toggle="modal" data-bs-target="#exampleModal" ><span><span>View Details</span></span></button>
                                             <br>
                                             <button  type="button" class="btn btn-danger col-12 mt-auto" data-bs-toggle="modal" data-bs-target="#" ><span><span>Remove</span></span></button>
-
                                         </div>
                                     </div>
                                 _END;
@@ -159,28 +154,28 @@ $vehicle_table = $stmt->fetchAll();
                         <div class="modal-body">
                             <form>
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Vehicle name</label>
-                                    <input type="text" class="form-control" id="text0">
+                                    <label for="vname" class="form-label">Vehicle name</label>
+                                    <input type="text" class="form-control" id="vname">
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Registraion number</label>
-                                    <input type="text" class="form-control" id="text1">
+                                    <label for="rnumber" class="form-label">Registraion number</label>
+                                    <input type="text" class="form-control" id="rnumber">
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Type</label>
-                                    <input type="text" class="form-control" id="text2">
+                                    <label for="type" class="form-label">Type</label>
+                                    <input type="text" class="form-control" id="type">
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Year</label>
-                                    <input type="text" class="form-control" id="text3">
+                                    <label for="year" class="form-label">Year</label>
+                                    <input type="text" class="form-control" id="year">
 
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Rental rate per Kilometer</label>
-                                    <input type="text" class="form-control" id="text0">
+                                    <label for="rrate" class="form-label">Rental rate per Kilometer</label>
+                                    <input type="text" class="form-control" id="rrate">
                                 </div>
 
                         </div>
@@ -201,64 +196,74 @@ $vehicle_table = $stmt->fetchAll();
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form id="addvehicle">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Vehicle model</label>
-                                    <input type="text" class="form-control" id="text0">
+                                    <input type="text" class="form-control" id="vemodel" value="abcd">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Vehicle make</label>
-                                    <input type="text" class="form-control" id="text0">
+                                    <input type="text" class="form-control" id="vemake" value="abcd">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Registraion number</label>
-                                    <input type="text" class="form-control" id="text1">
+                                    <input type="text" class="form-control" id="renumber" value="abcd">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Rental rate per Kilometer</label>
-                                    <input type="text" class="form-control" id="text0">
+                                    <input type="text" class="form-control" id="rerate" value="abcd">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Type</label>
-                                    <input type="text" class="form-control" id="text2">
+                                    <input type="text" class="form-control" id="vtype" value="abcd">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Year</label>
-                                    <input type="text" class="form-control" id="text3">
+                                    <input type="text" class="form-control" id="vyear" value="abcd">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Description</label>
-                                    <input type="text" class="form-control" id="text0">
+                                    <input type="text" class="form-control" id="vdescription" value="abcd">
 
                                 </div>
-                            <div>
-                            <label for="exampleInputEmail1" class="form-label">Image</label>
-                                <div class="input-group mb-3">
-                                    <input type="file" class="form-control" id="inputGroupFile02">
-                                    <!-- <label class="input-group-text" for="inputGroupFile02">Upload</label> -->
+                                <div>
+                                    <label for="exampleInputEmail1" class="form-label">Image</label>
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="vimg">
+                                    </div>
                                 </div>
-                            </div>
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span>Close</span></button>
-                            <button type="button" class="btn btn-primary"><span>Save</span></button>
+                            <button class="btn btn-primary" onclick="addVehicle(event)"><span>Save</span></button>
                         </div>
                     </div>
                 </div>
             </div>
+
+
             <!-- END OF ADD NEW VEHICLE FORM -->
-
-
-
 
             <!-- /#page-content-wrapper -->
         </div>
 
+
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        New Vehicle added!
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../JS/script.js"></script>
         <script>
@@ -268,6 +273,17 @@ $vehicle_table = $stmt->fetchAll();
             toggleButton.onclick = function() {
                 el.classList.toggle("toggled");
             };
+
+
+            document.addEventListener("DOMContentLoaded", function() {
+                var toastElement = document.getElementById('successToast');
+                var toast = new bootstrap.Toast(toastElement);
+
+                if (localStorage.getItem("showToast") === "true") {
+                    toast.show();
+                    localStorage.removeItem("showToast");
+                }
+            });
         </script>
 </body>
 

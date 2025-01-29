@@ -52,15 +52,26 @@ foreach ($rental_vehicle as $row) {
         $amount = $total_KM * $rental_rate;
     }
 
+    if($status == "Ongoing"){
+        $settlePaymentButton = <<< _END
+        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settlePayment" onclick="settlePayment($rentID)" ><span>Settle Payment</span></button></td>
+        _END;
+        $amount = "Pending";
+
+    }else{
+        $settlePaymentButton = "";
+    }
+    
 
     echo <<< _END
     
         <tr class="text-center">
-            <th scope="row">$no</th>
+            <td scope="row">$no</td>
             <td>$vehicle_name</td>
             <td scope="col">$date</td>
             <td>$cusEmail</td>
-            <td>Pending</td>
+            <td>$amount</td>
+            $settlePaymentButton
             
         </tr>
         _END;

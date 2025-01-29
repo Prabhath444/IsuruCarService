@@ -187,6 +187,7 @@ $vehicle_table = $stmt->fetchAll();
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/script.js"></script>
+    
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var toastElement = document.getElementById('successToast');
