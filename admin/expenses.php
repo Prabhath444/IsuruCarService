@@ -28,7 +28,7 @@ foreach ($expences_data as $row) {
 }
 
 
-?> 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -64,6 +64,8 @@ foreach ($expences_data as $row) {
                         class="fa-solid fa-bell me-2"></i>Manage Vehicles</a>
                 <a href="customerManagement.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-users me-2"></i>Manage Customers</a>
+                <a href="monthlyReport.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fa-solid fa-chart-line me-2"></i>Monthly Report</a>
                 <form action="../logout.php" method="POST">
                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -109,7 +111,7 @@ foreach ($expences_data as $row) {
 
             <div class="container-fluid px-4">
                 <div class="row g-3 my-2">
-                   
+
                     <div class="col-md-3">
                         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="window.location.href = '#'">
                             <div>
@@ -175,7 +177,7 @@ foreach ($expences_data as $row) {
                                 }
 
                                 ?>
-                            </tbody >
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -237,7 +239,7 @@ foreach ($expences_data as $row) {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../JS/script.js"></script>
-        
+
         <script>
             var el = document.getElementById("wrapper");
             var toggleButton = document.getElementById("menu-toggle");

@@ -153,12 +153,14 @@ $monthName = DateTime::createFromFormat('!m', $month)->format('F');
                         class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                 <a href="payments.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-wallet me-2"></i>Payments</a>
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                <a href="expenses.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-circle-check me-2"></i>Expenses</a>
                 <a href="vehiclemanagement.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-bell me-2"></i>Manage Vehicles</a>
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
+                <a href="customerManagement.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-users me-2"></i>Manage Customers</a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
+                        class="fa-solid fa-users me-2"></i>Monthly Report</a>
                 <form action="../logout.php" method="POST">
                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -202,7 +204,7 @@ $monthName = DateTime::createFromFormat('!m', $month)->format('F');
                 </div>
             </nav>
 
-            <div class="container-fluid px-4">
+            <div class="container-fluid px-4 total-row">
                 <h1>Report for <?php echo htmlspecialchars($monthName . " " . $year); ?></h1>
 
                 <div class="navigation">
@@ -211,8 +213,8 @@ $monthName = DateTime::createFromFormat('!m', $month)->format('F');
                 </div>
 
                 <!-- Income (Completed Rentals) Table -->
-                <h3 class="total-row" >Completed Rentals (Income)</h3>
-                <table class="table table-bordered text-center">
+                <h3 class="total-row">Completed Rentals (Income)</h3>
+                <table class="table table-bordered text-center total-row">
                     <thead>
                         <tr class="total-row">
                             <th>ID</th>
@@ -252,10 +254,10 @@ $monthName = DateTime::createFromFormat('!m', $month)->format('F');
                 </table>
 
                 <!-- Expenses Table -->
-                <h3 class="total-row" >Expenses</h3>
+                <h3 class="total-row">Expenses</h3>
                 <table class="table table-bordered text-center">
                     <thead>
-                        <tr class="total-row" >
+                        <tr class="total-row">
                             <th>ID</th>
                             <th>Date</th>
                             <th>Type</th>
@@ -266,7 +268,7 @@ $monthName = DateTime::createFromFormat('!m', $month)->format('F');
                     <tbody>
                         <?php if ($expenses): ?>
                             <?php foreach ($expenses as $expense): ?>
-                                <tr class="total-row" >
+                                <tr class="total-row">
                                     <td><?php echo htmlspecialchars($expense['Expense_ID']); ?></td>
                                     <td><?php echo htmlspecialchars($expense['Expense_date']); ?></td>
                                     <td><?php echo htmlspecialchars($expense['Expense_type']); ?></td>
