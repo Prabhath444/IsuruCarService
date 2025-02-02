@@ -574,6 +574,37 @@ function deleteExpense(id) {
   };
 }
 
+function generateReport() {
+  const rentals = [
+      { car: "Toyota Corolla", customer: "John Doe", days: 5, pricePerDay: 40 },
+      { car: "Honda Civic", customer: "Jane Smith", days: 3, pricePerDay: 50 },
+      { car: "Ford Mustang", customer: "Mike Johnson", days: 7, pricePerDay: 70 },
+      { car: "Tesla Model 3", customer: "Emma Brown", days: 2, pricePerDay: 100 }
+  ];
+
+  let totalCars = rentals.length;
+  let totalRevenue = 0;
+  let tableBody = "";
+
+  rentals.forEach(rental => {
+      let totalCost = rental.days * rental.pricePerDay;
+      totalRevenue += totalCost;
+      
+      tableBody += `
+          <tr>
+              <td>${rental.car}</td>
+              <td>${rental.customer}</td>
+              <td>${rental.days}</td>
+              <td>$${rental.pricePerDay}</td>
+              <td>$${totalCost}</td>
+          </tr>
+      `;
+  });
+
+  document.getElementById("reportTable").innerHTML = tableBody;
+  document.getElementById("totalCars").innerText = totalCars;
+  document.getElementById("totalRevenue").innerText = totalRevenue;
+}
 
 
 //................................Add vehicle
