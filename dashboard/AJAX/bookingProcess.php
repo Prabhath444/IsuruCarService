@@ -10,9 +10,10 @@ try {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 
-$rental_date = $_POST['rentaldate'];
-$return_date = $_POST['returndate'];
-$vehicle_reg_number = $_POST['rnumber'];
+$rental_date = filter_input(INPUT_POST, 'rentaldate', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$return_date = filter_input(INPUT_POST, 'returndate', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$vehicle_reg_number = filter_input(INPUT_POST, 'rnumber', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
 
 
 $rentalDateTime = new DateTime($rental_date);
@@ -57,7 +58,6 @@ try {
 
     $stmt3->execute();
 
-    echo ('done');
 } catch (PDOException $e) {
 
     echo "Error: " . $e->getMessage();

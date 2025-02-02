@@ -56,7 +56,9 @@ $vehicle_table = $stmt->fetchAll();
                 <a href="expenses.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-circle-user me-2"></i>Expenses</a>
                 <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
-                        class="fa-solid fa-bell me-2"></i>Vehicle Management</a>
+                        class="fa-solid fa-bell me-2"></i>Manage Vehicles</a>
+                <a href="customerManagement.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fa-solid fa-users me-2"></i>Manage Customers</a>
                 <form action="../logout.php" method="POST">
                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -101,14 +103,14 @@ $vehicle_table = $stmt->fetchAll();
             </nav>
             <br>
             <div>
-                <button type="button" class="btn btn-warning m-5" data-bs-toggle="modal" data-bs-target="#addnewvehicle"><span><span>ADD NEW</span></span></button>
+                <button type="button" class="btn btn-warning mx-5" data-bs-toggle="modal" data-bs-target="#addnewvehicle"><span><span>ADD NEW</span></span></button>
             </div>
             <br>
             <!-- vehicle showing -->
             <div class="row g-0 d-flex justify-content-around mx-0">
                 <div class="col-11">
                     <div class="container">
-                        <div class="scrollable-container">
+                        <div class="scrollable-container vh-70name">
                             <div class="row gy-5 d-flex justify-content-start mx-0 gap-5 mx-0">
 
                                 <?php
@@ -128,9 +130,12 @@ $vehicle_table = $stmt->fetchAll();
                                         <div class="card-body d-flex flex-column">
                                             <h5 class="card-title text-center">$vehicle_name</h5>
                                             <br><br>
-                                            <button  type="button" class="btn btn-warning col-12 mt-auto" data-bs-toggle="modal" data-bs-target="#exampleModal" ><span><span>View Details</span></span></button>
+                                            <div class="mt-auto">
+                                            <button  type="button" class="btn btn-warning col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" ><span><span>View Details</span></span></button>
                                             <br>
-                                            <button  type="button" class="btn btn-danger col-12 mt-auto" data-bs-toggle="modal" data-bs-target="#" ><span><span>Remove</span></span></button>
+                                            <br>
+                                            <button  type="button" class="btn btn-danger col-12" onclick="vehicleInfo('$vehicle_reg_number');" ><span><span>Remove</span></span></button>
+                                            </div>
                                         </div>
                                     </div>
                                 _END;
@@ -154,28 +159,33 @@ $vehicle_table = $stmt->fetchAll();
                         <div class="modal-body">
                             <form>
                                 <div class="mb-3">
-                                    <label for="vname" class="form-label">Vehicle name</label>
-                                    <input type="text" class="form-control" id="vname">
+                                    <label for="model" class="form-label">Model</label>
+                                    <input type="text" class="form-control" name="model">
+
+                                </div>
+                                <div class="mb-3">
+                                    <label for="make" class="form-label">Make</label>
+                                    <input type="text" class="form-control" name="make">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="rnumber" class="form-label">Registraion number</label>
-                                    <input type="text" class="form-control" id="rnumber">
+                                    <input type="text" class="form-control" name="rnumber">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="type" class="form-label">Type</label>
-                                    <input type="text" class="form-control" id="type">
+                                    <input type="text" class="form-control" name="type">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="year" class="form-label">Year</label>
-                                    <input type="text" class="form-control" id="year">
+                                    <input type="text" class="form-control" name="year">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="rrate" class="form-label">Rental rate per Kilometer</label>
-                                    <input type="text" class="form-control" id="rrate">
+                                    <input type="text" class="form-control" name="rrate">
                                 </div>
 
                         </div>
@@ -199,35 +209,35 @@ $vehicle_table = $stmt->fetchAll();
                             <form id="addvehicle">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Vehicle model</label>
-                                    <input type="text" class="form-control" id="vemodel" value="abcd">
+                                    <input type="text" class="form-control" id="vemodel">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Vehicle make</label>
-                                    <input type="text" class="form-control" id="vemake" value="abcd">
+                                    <input type="text" class="form-control" id="vemake">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Registraion number</label>
-                                    <input type="text" class="form-control" id="renumber" value="abcd">
+                                    <input type="text" class="form-control" id="renumber">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Rental rate per Kilometer</label>
-                                    <input type="text" class="form-control" id="rerate" value="abcd">
+                                    <input type="text" class="form-control" id="rerate">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Type</label>
-                                    <input type="text" class="form-control" id="vtype" value="abcd">
+                                    <input type="text" class="form-control" id="vtype">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Year</label>
-                                    <input type="text" class="form-control" id="vyear" value="abcd">
+                                    <input type="text" class="form-control" id="vyear">
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Description</label>
-                                    <input type="text" class="form-control" id="vdescription" value="abcd">
+                                    <input type="text" class="form-control" id="vdescription">
 
                                 </div>
                                 <div>
@@ -262,7 +272,7 @@ $vehicle_table = $stmt->fetchAll();
                 </div>
             </div>
         </div>
-        
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../JS/script.js"></script>

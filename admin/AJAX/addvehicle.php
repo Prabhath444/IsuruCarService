@@ -1,6 +1,14 @@
 <?php
 require_once("../../database/databaseLogin.php");
 
+session_start();
+
+if (isset($_SESSION["email"]) && $_SESSION["password"] && $_SESSION['admin_id']) {
+    
+} else {
+    header("Location: ../../login.php");
+}
+
 $vmodel = $_POST['vmodel'];
 $vmake = $_POST['vmake'];
 $rnumber = $_POST['rnumber'];

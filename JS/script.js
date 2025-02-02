@@ -57,7 +57,7 @@ window.addEventListener('scroll', () => {
 
 var myCarousel = document.querySelector('#carouselExampleRide');
 var carousel = new bootstrap.Carousel(myCarousel, {
-  interval: 4000 // 5 seconds
+  interval: 4000 // 4 seconds
 });
 
 
@@ -607,7 +607,7 @@ function generateReport() {
 }
 
 
-//................................Add a vehicle
+//................................Add vehicle
 
 function addVehicle(event) {
 
@@ -680,6 +680,7 @@ function addVehicle(event) {
 
     if (this.readyState == 4 && this.status == 200) {
 
+      alert(this.responseText);
       localStorage.setItem("showToast", "true");
 
       window.location.reload();
@@ -687,5 +688,103 @@ function addVehicle(event) {
   };
 }
 
+function vehicleInfo(rNumber) {
+
+  alert('connected');
+  var XHR = new XMLHttpRequest();
+  XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/vehicleInfo.php", true);
+  var formData = new FormData();
+
+  formData.append("rnumber", rNumber);
+
+  XHR.send(formData);
+
+  XHR.onreadystatechange = function () {
+
+    if (this.readyState == 4 && this.status == 200) {
+
+      var response = JSON.parse(this.responseText);
+
+      alert(this.responseText);
+      document.getElementsByName("model")[0].placeholder = response.Model;
+      document.getElementsByName("make")[0].placeholder = response.Make;
+      document.getElementsByName("rnumber")[0].placeholder = response.Registration_number;
+      document.getElementsByName("type")[0].placeholder = response.Type;
+      document.getElementsByName("year")[0].placeholder = response.Year;
+      document.getElementsByName("rrate")[0].placeholder = response.Rental_rate;
+
+
+      //window.location.reload();
+    }
+  };
+
+
+}
+
+// .................view customer details
+
+function customerDetails(id) {
+  var XHR = new XMLHttpRequest();
+
+  XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/customerDetails.php", true);
+  var formData = new FormData();
+
+  formData.append("id", id);
+  XHR.send(formData);
+
+  XHR.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+
+      var response = JSON.parse(this.responseText);
+
+
+
+      document.getElementsByName("name")[0].value = response.Fname+" "+response.Lname;
+      document.getElementsByName("email")[0].value = response.Email;
+      document.getElementsByName("address")[0].value = response.Address;
+      document.getElementsByName("lnumber")[0].value = response.License_number;
+      document.getElementsByName("rdate")[0].value = response.Registration_date;
+      document.getElementsByName("pnumber")[0].value = response.Phone_number;
+    }
+  };
+
+}
+
+//...................delete customer
+document.addEventListener("DOMContentLoaded", function () {
+  var exampleModal = document.getElementById('deleteCus');
+
+  if (exampleModal) {
+      exampleModal.addEventListener('show.bs.modal', function (event) {
+          var button = event.relatedTarget; // Button that triggered the modal
+
+          if (button) { 
+              var customerId = button.getAttribute('data-id'); 
+              var customerName = button.getAttribute('data-name');
+
+              // Set data inside modal
+              let modalText = document.getElementById("modal-text");
+              if (modalText) {
+                  modalText.innerText = `Are you sure you want to delete customer ${customerName}?`;
+              }
+
+              // Pass data to the Delete button inside the modal
+              let confirmButton = document.getElementById("confirmDelete");
+              if (confirmButton) {
+                  confirmButton.setAttribute("data-id", customerId);
+              }
+          }
+      });
+
+      // Handle Delete button click inside the modal
+      var confirmDeleteButton = document.getElementById("confirmDelete");
+      if (confirmDeleteButton) {
+          confirmDeleteButton.addEventListener("click", function () {
+              var customerId = this.getAttribute("data-id");
+              alert("Deleting customer with ID: " + customerId);
+          });
+      }
+  }
+});
 
 

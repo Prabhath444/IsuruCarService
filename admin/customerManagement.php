@@ -56,14 +56,16 @@ $customer_management = $stmt->fetchAll();
                 </a>
             </div>
             <div class="list-group list-group-flush my-3">
-                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text active"><i
+                <a href="index.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                 <a href="payments.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fas fa-solid fa-wallet me-2"></i>Payments</a>
-                <a href="expenses.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-circle-check me-2"></i>Expenses</a>
-                <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-bell me-2"></i>Notification</a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fas fa-solid fa-circle-check me-2"></i>Expenses</a>
+                <a href="vehiclemanagement.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fa-solid fa-bell me-2"></i>Manage Vehicles</a>
+                <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
+                        class="fa-solid fa-users me-2"></i>Manage Customers</a>
                 <form action="../logout.php" method="POST">
                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -108,13 +110,13 @@ $customer_management = $stmt->fetchAll();
             </nav>
 
             <div class="container-fluid px-4">
-            
+
                 <div class="row my-5">
                     <h3 class="fs-4 mb-3" id="table_name">All Customers</h3>
-                    
+
                     <div class="col">
-                    <button type="button" class="btn btn-primary mb-2"><span>Add New</span></button>
-                    <br>
+                        <button type="button" class="btn btn-primary mb-2"><span>Add New</span></button>
+                        <br>
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
@@ -135,6 +137,7 @@ $customer_management = $stmt->fetchAll();
 
                                     $full_name = $row['full_name'];
                                     $email = $row['Email'];
+                                    $id = $row['Customer_ID'];
 
 
                                     echo <<< _END
@@ -143,7 +146,8 @@ $customer_management = $stmt->fetchAll();
                                         <th scope="row">$no</th>
                                         <td>$full_name</td>
                                         <td scope="col">$email </td>
-                                        <td><button type="button" class="btn btn-primary "><span>View Details</span></button><button type="button" class="btn btn-danger mx-4"><span>Remove</span></button></td>
+                                        <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="customerDetails('$id');" ><span>View Details</span></button>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCus" data-id='$id' data-name='JOhn'><span>Delete</span></button></td>
                                     </tr>
                                     _END;
                                 }
@@ -159,6 +163,76 @@ $customer_management = $stmt->fetchAll();
     </div>
     <!-- /#page-content-wrapper -->
     </div>
+
+
+    <!-- view details form -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="exampleModal ">Payment Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" disabled>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" class="form-control" name="email" disabled>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" name="address" disabled>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="lnumber" class="form-label">License Number</label>
+                            <input type="text" class="form-control" name="lnumber" disabled>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="rdate" class="form-label">Registration Date</label>
+                            <input type="text" class="form-control" name="rdate" disabled>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="pnumber" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" name="pnumber" disabled>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete customer modal -->
+    <div class="modal fade" id="deleteCus" tabindex="-1" aria-labelledby="deleteCusLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="deleteCusLabel">Delete Customer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <p id="modal-text">Are you sure you want to delete this customer?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span>Close</span></button>
+                            <button type="button" class="btn btn-danger" id="confirmDelete"><span>Delete</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/script.js"></script>

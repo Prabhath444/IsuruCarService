@@ -34,10 +34,9 @@ foreach ($rental_vehicle as $row) {
     if ($status == 'Ongoing') {
         $ongoing++;
         //$ongoing--;
-    }else{
+    } else {
         $completed++;
     }
-    
 }
 ?>
 
@@ -72,7 +71,9 @@ foreach ($rental_vehicle as $row) {
                 <a href="expenses.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-circle-check me-2"></i>Expenses</a>
                 <a href="vehiclemanagement.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
-                        class="fa-solid fa-bell me-2"></i>Vehicle Management</a>
+                        class="fa-solid fa-bell me-2"></i>Manage Vehicles</a>
+                <a href="customerManagement.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                        class="fa-solid fa-users me-2"></i>Manage Customers</a>
                 <form action="../logout.php" method="POST">
                     <button type="submit" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold" style="border: none; background: none;">
                         <i class="fa-solid fa-right-from-bracket me-2"></i>Logout
@@ -164,7 +165,7 @@ foreach ($rental_vehicle as $row) {
                     <h3 class="fs-4 mb-3" id="table_name">Ongoing Rentals</h3>
                     <div class="col">
                         <table class="table bg-white rounded shadow-sm  table-hover">
-                            <thead class="text-center" >
+                            <thead class="text-center">
                                 <tr>
                                     <th scope="col" width="50"></th>
                                     <th scope="col">Vehicle</th>
@@ -179,13 +180,12 @@ foreach ($rental_vehicle as $row) {
 
                                 foreach ($rental_vehicle as $row) {
                                     static $no = 0;
-                                    
+
                                     $status = $row['Rental_status'];
 
                                     if ($status != "Ongoing") {
                                         continue;
-
-                                    }else{
+                                    } else {
                                         $no++;
                                     }
 
