@@ -28,7 +28,7 @@ foreach ($expences_data as $row) {
 }
 
 
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
