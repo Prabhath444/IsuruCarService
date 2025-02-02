@@ -162,10 +162,9 @@ foreach ($expences_data as $row) {
                     </div>
 
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded" onclick="loadContent('expenses')">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="window.location.href = 'monthlyReport.php'">
                             <div>
-                                <h3 class="fs-2">13</h3>
-                                <p class="fs-5 fw-bold">Monthly Report</p>
+                                <p class="fs-5 fw-bold pdding">Monthly Report</p>
                             </div>
                             <i class="fa-solid fa-coins fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                         </div>

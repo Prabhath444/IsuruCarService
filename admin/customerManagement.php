@@ -115,8 +115,7 @@ $customer_management = $stmt->fetchAll();
                     <h3 class="fs-4 mb-3" id="table_name">All Customers</h3>
 
                     <div class="col">
-                        <button type="button" class="btn btn-primary mb-2"><span>Add New</span></button>
-                        <br>
+
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
@@ -147,7 +146,7 @@ $customer_management = $stmt->fetchAll();
                                         <td>$full_name</td>
                                         <td scope="col">$email </td>
                                         <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="customerDetails('$id');" ><span>View Details</span></button>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCus" data-id='$id' data-name='JOhn'><span>Delete</span></button></td>
+                                        <button type="button" class="btn btn-danger mx-2" data-bs-toggle="modal" data-bs-target="#deleteCus" data-id='$id' data-name='$full_name'><span>Delete</span></button></td>
                                     </tr>
                                     _END;
                                 }
@@ -236,6 +235,7 @@ $customer_management = $stmt->fetchAll();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/script.js"></script>
+    <script src="script.js"></script>
     <script>
         var el = document.getElementById("wrapper");
         var toggleButton = document.getElementById("menu-toggle");

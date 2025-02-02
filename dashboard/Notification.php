@@ -124,7 +124,7 @@ ON n.`vehicle_Registration_number` = v.`Registration_number` WHERE n.`customer_I
                         <div class="container">
                             <div class="row">
                             <div class="col-4 col-lg-2">
-                                <img src="../$vehicle_img" height="100px" class="rounded-3" alt="...">
+                                <img src="../$vehicle_img" height="50px" class="rounded-3" alt="...">
                             </div>
                             <div class="col-8 col-lg-10 d-flex  align-items-center">
                             <p class="">$vehicle booked. </p>

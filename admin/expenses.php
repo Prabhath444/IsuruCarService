@@ -109,27 +109,7 @@ foreach ($expences_data as $row) {
 
             <div class="container-fluid px-4">
                 <div class="row g-3 my-2">
-                    <!-- <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeDashboardContent('Ongoing')">
-                            <div>
-                                <h3 class="fs-2"><?php echo $ongoing  ?></h3>
-                                <p class="fs-5 fw-bold">Pending</p>
-                            </div>
-                            <i class="fa-solid fa-car fs-1 primary-text border rounded-full secondary-bg p-3"></i>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="changeDashboardContent('Completed')">
-                            <div>
-                                <h3 class="fs-2"><?php echo $completed  ?></h3>
-                                <p class="fs-5 fw-bold">Recieved</p>
-                            </div>
-                            <i
-                                class="fa-solid fa-car-on fs-1 primary-text border rounded-full secondary-bg p-3 status"></i>
-                        </div>
-                    </div> -->
-
+                   
                     <div class="col-md-3">
                         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="window.location.href = '#'">
                             <div>
@@ -141,10 +121,10 @@ foreach ($expences_data as $row) {
                     </div>
 
                     <div class="col-md-3">
-                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded" onclick="loadContent('expenses')">
+                        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded status" onclick="window.location.href = 'monthlyReport.php'">
                             <div>
-                                <h3 class="fs-2">13</h3>
-                                <p class="fs-5 fw-bold">Monthly Report</p>
+                                <h3 class="fs-2" hidden>_</h3>
+                                <p class="fs-5 fw-bold pdding">Monthly Report</p>
                             </div>
                             <i class="fa-solid fa-coins fs-1 primary-text border rounded-full secondary-bg p-3"></i>
                         </div>

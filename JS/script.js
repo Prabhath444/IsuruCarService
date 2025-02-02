@@ -690,7 +690,7 @@ function addVehicle(event) {
 
 function vehicleInfo(rNumber) {
 
-  alert('connected');
+  //alert('connected');
   var XHR = new XMLHttpRequest();
   XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/vehicleInfo.php", true);
   var formData = new FormData();
@@ -714,7 +714,6 @@ function vehicleInfo(rNumber) {
       document.getElementsByName("rrate")[0].placeholder = response.Rental_rate;
 
 
-      //window.location.reload();
     }
   };
 
@@ -750,41 +749,5 @@ function customerDetails(id) {
 
 }
 
-//...................delete customer
-document.addEventListener("DOMContentLoaded", function () {
-  var exampleModal = document.getElementById('deleteCus');
-
-  if (exampleModal) {
-      exampleModal.addEventListener('show.bs.modal', function (event) {
-          var button = event.relatedTarget; // Button that triggered the modal
-
-          if (button) { 
-              var customerId = button.getAttribute('data-id'); 
-              var customerName = button.getAttribute('data-name');
-
-              // Set data inside modal
-              let modalText = document.getElementById("modal-text");
-              if (modalText) {
-                  modalText.innerText = `Are you sure you want to delete customer ${customerName}?`;
-              }
-
-              // Pass data to the Delete button inside the modal
-              let confirmButton = document.getElementById("confirmDelete");
-              if (confirmButton) {
-                  confirmButton.setAttribute("data-id", customerId);
-              }
-          }
-      });
-
-      // Handle Delete button click inside the modal
-      var confirmDeleteButton = document.getElementById("confirmDelete");
-      if (confirmDeleteButton) {
-          confirmDeleteButton.addEventListener("click", function () {
-              var customerId = this.getAttribute("data-id");
-              alert("Deleting customer with ID: " + customerId);
-          });
-      }
-  }
-});
 
 
