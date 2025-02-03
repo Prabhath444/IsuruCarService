@@ -1,5 +1,5 @@
 <?php
-require_once("../database/databaseLogin.php");
+require_once("../../database/databaseLogin.php");
 session_start();
 if (isset($_SESSION["email"]) && $_SESSION["password"] && $_SESSION['admin_id']) {
 } else {
@@ -12,8 +12,8 @@ try {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
 
-if (isset($_POST["rnumber"])) {
-    $rnumber = $_POST['rnumber'];
+if (isset($_POST["id"])) {
+    $rnumber = $_POST['id'];
 }
 
 
@@ -22,7 +22,6 @@ try {
     $stmt = $pdo->prepare($query);
 
     $stmt->bindParam(':rnumber', $rnumber);
-    $stmt->bindParam(':val', $value);
 
     $stmt->execute();
     $vehicle = $stmt->fetchAll();

@@ -544,6 +544,58 @@ function addExpenses() {
   };
 }
 
+//......................Delete Expense
+
+var exampleModal = document.getElementById('deleteExp');
+
+if (exampleModal) {
+    exampleModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+
+        if (button) {
+            var RegNumber = button.getAttribute('data-id');
+            var ExpenseName = button.getAttribute('data-name');
+
+            let modalText = document.getElementById("modal-text");
+            if (modalText) {
+                modalText.innerText = "Are you sure you want to delete Expense " + ExpenseName;
+            }
+
+            let confirmButton = document.getElementById("confirmDeleteVehicle");
+            if (confirmButton) {
+                confirmButton.setAttribute("data-id", RegNumber);
+            }
+        }
+    });
+
+    var confirmDeleteButton = document.getElementById("confirmDeleteVehicle");
+    if (confirmDeleteButton) {
+        confirmDeleteButton.addEventListener("click", function () {
+            var vehicleId = this.getAttribute("data-id");
+
+            var XHR = new XMLHttpRequest();
+
+            XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/deleteVehicle.php", true);
+            var formData = new FormData();
+            formData.append("vehId", vehicleId);
+            XHR.send(formData);
+
+            XHR.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    if(this.responseText){
+                        alert(this.responseText);
+                    }
+                    window.location.reload();
+                }
+            };
+
+
+        });
+    }
+}
+
+
 
 //....................Delete Expenses
 function deleteExpense(id) {
@@ -680,7 +732,7 @@ function addVehicle(event) {
 
     if (this.readyState == 4 && this.status == 200) {
 
-      alert(this.responseText);
+      //alert(this.responseText);
       localStorage.setItem("showToast", "true");
 
       window.location.reload();
@@ -750,34 +802,7 @@ function customerDetails(id) {
 }
 
 
-// .................view vehicle details
 
-function vehicleDetails(id) {
-  var XHR = new XMLHttpRequest();
-
-  XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/vehicleInfo.php", true);
-  var formData = new FormData();
-
-  formData.append("id", id);
-  XHR.send(formData);
-
-  XHR.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-
-      var response = JSON.parse(this.responseText);
-
-
-
-      document.getElementsByName("name")[0].value = response.Fname+" "+response.Lname;
-      document.getElementsByName("email")[0].value = response.Email;
-      document.getElementsByName("address")[0].value = response.Address;
-      document.getElementsByName("lnumber")[0].value = response.License_number;
-      document.getElementsByName("rdate")[0].value = response.Registration_date;
-      document.getElementsByName("pnumber")[0].value = response.Phone_number;
-    }
-  };
-
-}
 
 
 

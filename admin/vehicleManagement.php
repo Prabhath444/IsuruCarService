@@ -133,10 +133,10 @@ $vehicle_table = $stmt->fetchAll();
                                             <h5 class="card-title text-center">$vehicle_name</h5>
                                             <br><br>
                                             <div class="mt-auto">
-                                            <button  type="button" class="btn btn-warning col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" ><span><span>View Details</span></span></button>
+                                            <button  type="button" class="btn btn-warning col-12" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="vehicleDetails('$vehicle_reg_number');"  ><span><span>View Details</span></span></button>
                                             <br>
                                             <br>
-                                            <button  type="button" class="btn btn-danger col-12" onclick="vehicleInfo('$vehicle_reg_number');" ><span><span>Remove</span></span></button>
+                                            <button  type="button" class="btn btn-danger col-12" data-bs-toggle="modal" data-bs-target="#deleteVeh" data-id='$vehicle_reg_number' data-name='$vehicle_name'><span><span>Remove</span></span></button>
                                             </div>
                                         </div>
                                     </div>
@@ -155,46 +155,43 @@ $vehicle_table = $stmt->fetchAll();
                 <div class="modal-dialog modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModal">Payment Details</h5>
+                            <h5 class="modal-title" id="exampleModal">Vehicle Details</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form>
                                 <div class="mb-3">
                                     <label for="model" class="form-label">Model</label>
-                                    <input type="text" class="form-control" name="model">
+                                    <input type="text" class="form-control" name="model" disabled>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="make" class="form-label">Make</label>
-                                    <input type="text" class="form-control" name="make">
+                                    <input type="text" class="form-control" name="make" disabled>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="rnumber" class="form-label">Registraion number</label>
-                                    <input type="text" class="form-control" name="rnumber">
+                                    <input type="text" class="form-control" name="rnumber" disabled>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="type" class="form-label">Type</label>
-                                    <input type="text" class="form-control" name="type">
+                                    <input type="text" class="form-control" name="type" disabled>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="year" class="form-label">Year</label>
-                                    <input type="text" class="form-control" name="year">
+                                    <input type="text" class="form-control" name="year" disabled>
 
                                 </div>
                                 <div class="mb-3">
                                     <label for="rrate" class="form-label">Rental rate per Kilometer</label>
-                                    <input type="text" class="form-control" name="rrate">
+                                    <input type="text" class="form-control" name="rrate" disabled>
                                 </div>
 
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span>Close</span></button>
-                            <button type="button" class="btn btn-primary"><span>Save</span></button>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -275,9 +272,33 @@ $vehicle_table = $stmt->fetchAll();
             </div>
         </div>
 
+        <!-- Delete vehicle modal -->
+        <div class="modal fade" id="deleteVeh" tabindex="-1" aria-labelledby="deleteVehLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold" id="deleteVehLabel">Delete Customer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <p id="modal-text">Are you sure you want to delete this vehicle?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span>Close</span></button>
+                                <button type="button" class="btn btn-danger" id="confirmDeleteVehicle"><span>Delete</span></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../JS/script.js"></script>
+        <script src="script.js"></script>
         <script>
             var el = document.getElementById("wrapper");
             var toggleButton = document.getElementById("menu-toggle");

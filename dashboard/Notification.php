@@ -57,7 +57,7 @@ ON n.`vehicle_Registration_number` = v.`Registration_number` WHERE n.`customer_I
                         class="fa-solid fa-circle-user me-2"></i>Profile</a>
                 <a href="Bookings.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                         class="fa-solid fa-circle-check me-2"></i>Bookings</a>
-                <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
+                <a href="Notification.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold active"><i
                         class="fa-solid fa-bell me-2"></i><span class="position-relative padding-rgt">Notification <span id="notifications" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                         <?php echo $_SESSION['UnreadNotifiCount']; ?>
                         </span></span>
@@ -127,7 +127,7 @@ ON n.`vehicle_Registration_number` = v.`Registration_number` WHERE n.`customer_I
                                 <img src="../$vehicle_img" height="50px" class="rounded-3" alt="...">
                             </div>
                             <div class="col-8 col-lg-10 d-flex  align-items-center">
-                            <p class="">$vehicle booked. </p>
+                            <p class="">$vehicle booked.</p>
                             </div>
                             </div>
                         </div>

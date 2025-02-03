@@ -20,7 +20,6 @@ try {
     $stmt->bindParam(':password', $_POST['password']);
     
     $stmt->execute();
-    $variabl = "hi";
     
 
 } catch (PDOException $e) {
