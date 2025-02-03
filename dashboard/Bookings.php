@@ -129,8 +129,9 @@ $vehicle_table = $stmt->fetchAll();
                                 <div class="card col-12 col-md-3 px-0" style="width: 15rem;">
                                         <img src="../$vehicle_img" class="card-img-top" alt="...">
                                         <div class="card-body d-flex flex-column">
-                                            <h5 class="card-title text-center">$vehicle_name</h5>
-                                            <h6 class="card-title text-center">Rs. $vehicle_rental_rate / KM</h6>
+                                            <h4 class="card-title text-center">$vehicle_name</h4>
+                                            <h5 class="card-title text-center">Rs. $vehicle_rental_rate / KM</h5>
+                                            <h6 class="card-title text-center">Maximum mileage without additional charges is 100KM</h6>
                                             <br><br>
                                             <button onclick="addRegistrationNumber('$vehicle_reg_number')" type="button" class="btn btn-warning col-12 mt-auto" data-bs-toggle="modal" data-bs-target="#staticBackdrop" ><span><span>Select</span></span></button>
                                         </div>
