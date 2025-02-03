@@ -136,7 +136,7 @@ $monthName = DateTime::createFromFormat('!m', $month)->format('F');
             background-color: #f2f2f2;
         }
     </style>
-    <title>AdminDashboard</title>
+    <title>Monthly Report</title>
 </head>
 
 <body>
@@ -204,7 +204,7 @@ $monthName = DateTime::createFromFormat('!m', $month)->format('F');
                 </div>
             </nav>
 
-            <div class="container-fluid px-4 total-row">
+            <div class="container-fluid px-4 total-row mx-3 mt-5">
                 <h1>Report for <?php echo htmlspecialchars($monthName . " " . $year); ?></h1>
 
                 <div class="navigation">

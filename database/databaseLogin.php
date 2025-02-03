@@ -2,7 +2,7 @@
 $host = 'localhost';
 $data = 'carrentalsystem'; 
 $user = 'root'; 
-$pass = 'Root1234@#'; 
+$pass = 'root123'; 
 $chrs = 'utf8mb4';
 $attr = "mysql:host=$host;dbname=$data;charset=$chrs";
 $opts =
