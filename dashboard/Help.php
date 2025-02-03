@@ -86,6 +86,91 @@ if (isset($_SESSION["email"]) && $_SESSION["fname"]) {
                     </ul>
                 </div>
             </nav>
+            <div class="accordion accordion-flush mt-5 mx-3" id="accordionFlushExample">
+                <div class="accordion-item ">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Booking a Vehicle
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            - Customers can book a vehicle online or visit our rental office.<br>
+                            - A valid Sri Lankan National Identity Card (NIC) or Passport and a valid Driving License are required.<br>
+                            - The minimum age to rent a vehicle is 21 years.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                            Rental Duration & Daily Limit
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            - Each rental is for a <strong>24-hour period</strong> from the time of pickup.<br>
+                            - Customers are allowed to <strong>drive up to 100 km per day</strong> without extra charges.<br>
+                            - If you exceed 100 km per day, you will be charged an additional fee per kilometer.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                            Payment & Charges
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            - Payment is <strong>made at the end of the rental period</strong>, when the vehicle is returned.<br>
+                            - Customers must <strong>pay for any additional kilometers driven</strong> beyond the daily 100 km limit.<br>
+                            - A security deposit may be required at the time of booking, which will be refunded upon returning the vehicle in good condition.<br>
+                            - Fuel costs are <strong>not included</strong> in the rental fee. The vehicle should be returned with the same fuel level as at pickup.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                            Insurance & Damage Policy
+                        </button>
+                    </h2>
+                    <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            - All rental vehicles come with <strong>basic insurance coverage</strong>. However, customers are responsible for any damages not covered by insurance.<br>
+                            - In case of an accident, customers must inform our support team and local authorities immediately.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                            Vehicle Return & Late Fees
+                        </button>
+                    </h2>
+                    <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            - Vehicles must be returned <strong>on time</strong>. Late returns will incur additional charges.<br>
+                            - The vehicle must be returned in the same condition as rented, clean and without damages.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                            Contact & Support
+                        </button>
+                    </h2>
+                    <div id="flush-collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            - <strong>Customer Support Hotline:</strong> 0777259259<br>
+                            - <strong>Email:</strong> isurucab service@gmail.com<br>
+                            - <strong>Office Address:</strong> 318/5A, St. Mary's Road, Mahahunupitiya.
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
