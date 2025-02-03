@@ -750,4 +750,34 @@ function customerDetails(id) {
 }
 
 
+// .................view vehicle details
+
+function vehicleDetails(id) {
+  var XHR = new XMLHttpRequest();
+
+  XHR.open("POST", "http://localhost/IsuruCarService/admin/AJAX/vehicleInfo.php", true);
+  var formData = new FormData();
+
+  formData.append("id", id);
+  XHR.send(formData);
+
+  XHR.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+
+      var response = JSON.parse(this.responseText);
+
+
+
+      document.getElementsByName("name")[0].value = response.Fname+" "+response.Lname;
+      document.getElementsByName("email")[0].value = response.Email;
+      document.getElementsByName("address")[0].value = response.Address;
+      document.getElementsByName("lnumber")[0].value = response.License_number;
+      document.getElementsByName("rdate")[0].value = response.Registration_date;
+      document.getElementsByName("pnumber")[0].value = response.Phone_number;
+    }
+  };
+
+}
+
+
 

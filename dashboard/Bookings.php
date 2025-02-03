@@ -121,7 +121,8 @@ $vehicle_table = $stmt->fetchAll();
                                     $vehicle_name = $vehicle['Make'] . " " . $vehicle['Model'];
                                     $vehicle_descr = $vehicle['description'];
                                     $vehicle_reg_number = $vehicle['Registration_number'];
-
+                                    $vehicle_rental_rate = number_format($vehicle['Rental_rate'], 2);
+ 
 
                                     echo <<< _END
         
@@ -129,6 +130,7 @@ $vehicle_table = $stmt->fetchAll();
                                         <img src="../$vehicle_img" class="card-img-top" alt="...">
                                         <div class="card-body d-flex flex-column">
                                             <h5 class="card-title text-center">$vehicle_name</h5>
+                                            <h6 class="card-title text-center">Rs. $vehicle_rental_rate / KM</h6>
                                             <br><br>
                                             <button onclick="addRegistrationNumber('$vehicle_reg_number')" type="button" class="btn btn-warning col-12 mt-auto" data-bs-toggle="modal" data-bs-target="#staticBackdrop" ><span><span>Select</span></span></button>
                                         </div>
